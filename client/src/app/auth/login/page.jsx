@@ -7,7 +7,7 @@ import GoogleIcon from '@/assets/Google.svg'
 import Link from "next/link"
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 import { useRouter } from 'next/navigation'
-import { axios_auth } from "@/lib/axios"
+import { axios_analytics } from "@/lib/axios"
 
 const LoginForm = () => {
   const router = useRouter();
@@ -17,7 +17,7 @@ const LoginForm = () => {
   useEffect(() => {
     const isAuth = async () => {
       try {
-        await axios_auth.get('/');
+        await axios_analytics.get('/');
         router.push('/');
       } catch (error) {
         console.log(error);

@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from 'next/navigation';
@@ -22,21 +22,11 @@ import {
   ListItemText,
   Grid,
 } from "@mui/material";
-import Reqres from "../../../components/Reqres"; // Ensure the correct path to Reqres component
-import useAuth from "@/hooks/useAuth";
+import Reqres from "../../../components/Reqres";
 
 const LogManager = () => {
-  const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!isAuthenticated) {
-    router.push('/auth/login');
-    return null;
-  }
   const [options, setOptions] = useState({
     countries: [],
     subscriptions: [],
