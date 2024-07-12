@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAdmin, getCount, getLogs, isAuth, loginUser, logoutUser, updateCount, updateLogs } from "../controllers/main.js";
+import { getAdmin, getCount, getLogs, getUser, isAuth, loginUser, logoutUser, updateCount, updateLogs } from "../controllers/main.js";
 const router = Router();
 
 // UNPROTECTED ROUTES **************************************************
@@ -12,6 +12,7 @@ router.use(isAuth);
 
 // GENERAL
 router.get("/get-admin", getAdmin);
+router.get("/get-user", getUser);
 router.get("/logout", logoutUser);
 
 // COUNT

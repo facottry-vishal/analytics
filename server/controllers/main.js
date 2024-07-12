@@ -12,9 +12,11 @@ export const isAuth = async (req, res, next) => {
 
     next();
   } catch (error) {
-    return res
-      .status(error.response.status || 500)
-      .json(error.response.data);
+    if (error.response) {
+      return res.status(error.response.status).json(error.response.data);
+    } else {
+      return res.status(500).json({ message: "INTERNAL SERVER ERROR" });
+    }
   }
 };
 
@@ -45,9 +47,11 @@ export const loginUser = async (req, res) => {
     // Forward the status and data from backendResponse to the client
     return res.status(backendResponse.status).send(backendResponse.data);
   } catch (error) {
-    return res
-      .status(error.response.status || 500)
-      .json(error.response.data);
+    if (error.response) {
+      return res.status(error.response.status).json(error.response.data);
+    } else {
+      return res.status(500).json({ message: "INTERNAL SERVER ERROR" });
+    }
   }
 };
 
@@ -73,9 +77,11 @@ export const logoutUser = async (req, res) => {
     // Forward the status and data from backendResponse to the client
     return res.status(backendResponse.status).send(backendResponse.data);
   } catch (error) {
-    return res
-      .status(error.response.status || 500)
-      .json(error.response.data);
+    if (error.response) {
+      return res.status(error.response.status).json(error.response.data);
+    } else {
+      return res.status(500).json({ message: "INTERNAL SERVER ERROR" });
+    }
   }
 };
 
@@ -101,12 +107,43 @@ export const getAdmin = async (req, res) => {
     // Forward the status and data from backendResponse to the client
     return res.status(backendResponse.status).send(backendResponse.data);
   } catch (error) {
-    return res
-      .status(error.response.status || 500)
-      .json(error.response.data);
+    if (error.response) {
+      return res.status(error.response.status).json(error.response.data);
+    } else {
+      return res.status(500).json({ message: "INTERNAL SERVER ERROR" });
+    }
   }
 };
 
+export const getUser = async (req, res) => {
+  try {
+    const backendURL = process.env.MAIN_SERVER_URL;
+
+    const backendResponse = await axios.get(backendURL + "/auth/get-user", {
+      headers: {
+        Authorization: req.headers.authorization,
+        Cookie: req.headers.cookie,
+      },
+    });
+
+    // Forward only necessary headers
+    const headersToForward = ["content-type", "authorization", "set-cookie"];
+    headersToForward.forEach((header) => {
+      if (backendResponse.headers[header]) {
+        res.setHeader(header, backendResponse.headers[header]);
+      }
+    });
+
+    // Forward the status and data from backendResponse to the client
+    return res.status(backendResponse.status).send(backendResponse.data);
+  } catch (error) {
+    if (error.response) {
+      return res.status(error.response.status).json(error.response.data);
+    } else {
+      return res.status(500).json({ message: "INTERNAL SERVER ERROR" });
+    }
+  }
+};
 
 // NOT IMPLEMENTED
 export const getCount = async (req, res) => {
@@ -115,7 +152,7 @@ export const getCount = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "INTERNAL SERVER ERROR" });
   }
-}
+};
 
 export const updateCount = async (req, res) => {
   try {
@@ -123,7 +160,7 @@ export const updateCount = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "INTERNAL SERVER ERROR" });
   }
-}
+};
 
 export const getLogs = async (req, res) => {
   try {
@@ -131,7 +168,7 @@ export const getLogs = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "INTERNAL SERVER ERROR" });
   }
-}
+};
 
 export const updateLogs = async (req, res) => {
   try {
@@ -139,4 +176,4 @@ export const updateLogs = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "INTERNAL SERVER ERROR" });
   }
-}
+};

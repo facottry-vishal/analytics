@@ -38,7 +38,7 @@ const Filter = () => {
                 <h1 className="text-lg font-bold text-center my-4">Select Filters</h1>
                 <div className="flex items-center justify-center gap-4">
                     {isCollapsed === false &&
-                        <button className="p-2 rounded-full  text-white bg-primary-600 hover:bg-primary-700 transition-all" onClick={() =>
+                        <button className="p-2 rounded-full  text-white bg-primary600 hover:bg-primary700 transition-all" onClick={() =>
                             setIsFilterEditable(prev => !prev)
                         }>
                             <IoPencilSharp />

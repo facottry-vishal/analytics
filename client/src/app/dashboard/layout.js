@@ -1,34 +1,63 @@
+'use client'
 import { axios_analytics } from "@/lib/axios";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { userStore, activeFilterStore } from "@/lib/store";
+import { Loader } from "@/Components/Loader";
 
-const checkAuth = async () => {
-  try {
-    const response = await axios_analytics.get("/");
-    console.log(response.data);
-    return { isAuthenticated: true, user: response.data}
-  } catch (error) {
-    console.log(error.response.data);
-    return { isAuthenticated: false, user: null }
-  }
-};
+export default function Layout({ children }) {
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
-const getAdmin = async () => {
-  try {
-    const response = await axios_analytics.get("/get-admin");
-    return response;
-  } catch (error) {
-    return error.response;
-  }
-}
+  const [activeFilter, setActiveFilter] = activeFilterStore(state => [state.activeFilter, state.setActiveFilter]);
 
-export default async function DashboardLayout({ children }) {
-  // const isAuth = await checkAuth();
-  const isAuthenticated = true;
-  // const admin = await getAdmin();
+  const { activeProject, setActiveProject, setCompany, setProjects, setUser } = userStore(state => ({
+    activeProject: state.activeProject,
+    setActiveProject: state.setActiveProject,
+    setCompany: state.setCompany,
+    setProjects: state.setProjects,
+    setUser: state.setUser
+  }));
 
-  if (!isAuthenticated) {
-    return <main>Unauthorized</main>;
+  const fetchData = async () => {
+    try {
+      const userResponse = await axios_analytics.get('/get-user');
+      setUser(userResponse.data);
+
+      const adminResponse = await axios_analytics.get('/get-admin');
+      const { company, projects } = adminResponse.data;
+
+      setProjects(projects);
+      setCompany(company);
+
+      const currentProject = projects.find((p) => p.projectID === activeProject?.projectID) || projects[0];
+      setActiveProject(currentProject);
+
+      if (Object.keys(activeFilter).length === 0 && projects.length > 0) {
+        const defaultFilter = Object.keys(projects[0].filters).reduce((acc, key) => ({ ...acc, [key]: "" }), {});
+        setActiveFilter(defaultFilter);
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      router.push(error.response?.data.code === "NO_PROJECT" ? '/' : '/');
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <Loader />
+    )
   } else {
-    return <main>{children}</main>;
+    return (
+      <main>
+        {children}
+      </main>
+    )
   }
 }

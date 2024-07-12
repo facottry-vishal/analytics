@@ -27,6 +27,6 @@ export const activeFilterStore = create(
 );
 
 export const globalStore = create(persist((set) => ({
-  sidebar: true,
-  setSidebar: (sidebar) => set({ sidebar }),
+  sideDetailsCollapsed: false,
+  setDetailsCollapsed: (sideDetailsCollapsed) => set({ sideDetailsCollapsed }),
 }), { name: "global" }));
