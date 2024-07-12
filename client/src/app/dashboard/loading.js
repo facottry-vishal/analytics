@@ -1,7 +1,7 @@
-import { Loader } from "@/components/Loader"
+import { Loader } from "@/Components/Loader.jsx"
 import React from 'react'
 
-const loading = (props) => {
+const loading = () => {
   return (
     <Loader />
   )
