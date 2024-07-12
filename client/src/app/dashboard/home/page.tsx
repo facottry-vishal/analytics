@@ -2,20 +2,16 @@
 import React from "react";
 import { userStore } from "@/lib/store";
 import Link from "next/link";
-import Filter from "@/Components/Filter";
 import ProjectSelector from "@/Components/ProjectSelector";
+import Filter from "@/components/Filter";
 
 const Home = () => {
-  const [user, projects, company] = userStore((state) => [
+  const [user] = userStore((state) => [
     state.user,
-    state.projects,
-    state.company,
   ]);
 
-  console.log(projects);
-
   return (
-    <div className="mx-5">
+    <div className="px-5 bg-white text-black">
       <nav className="flex justify-between items-center mt-5">
         <div>
           <Link href={'/'} className="font-bold text-xl">Facottry Analytics</Link>
@@ -38,8 +34,8 @@ const Home = () => {
       {/* User */}
       <div>
         <ul>
-          <li>{user.email}</li>
-          <li>{user.name}</li>
+          <li>{user?.email}</li>
+          <li>{user?.name}</li>
         </ul>
       </div>
 

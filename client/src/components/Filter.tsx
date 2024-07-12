@@ -1,12 +1,14 @@
-'use client';
 import { activeFilterStore, userStore } from "@/lib/store";
-import React from 'react';
+import React from 'react'
 import { IoPencilSharp } from "react-icons/io5";
-import Select from 'react-select';
+import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 import { toast } from "react-toastify";
 
-const Filter = () => {
+type Props = {}
+
+
+const Filter = ({ }: Props) => {
     const [activeFilter, setActiveFilter] = activeFilterStore(state => [state.activeFilter, state.setActiveFilter]);
     const activeProject = userStore(state => state.activeProject);
     const allFilters = activeProject?.filters || [];
@@ -15,18 +17,18 @@ const Filter = () => {
     const [isFilterEditable, setIsFilterEditable] = React.useState(true);
     const [isCollapsed, setIsCollapsed] = React.useState(false);
 
-    const handleChange = (selectedOptions, { name }) => {
-        const allSelected = selectedOptions.some(option => option.value === "ALL");
+    const handleChange = (selectedOptions: any, { name }: any) => {
+        const allSelected = selectedOptions.some((option: { value: string; }) => option.value === "ALL");
 
         if (allSelected) {
             selectedOptions = [{ value: "ALL", label: "ALL" }];
         } else {
-            selectedOptions = selectedOptions.filter(option => option.value !== "ALL");
+            selectedOptions = selectedOptions.filter((option: { value: string; }) => option.value !== "ALL");
         }
 
-        const selectedValues = selectedOptions.map(option => option.value).join(', ');
+        const selectedValues = selectedOptions.map((option: { value: string; }) => option.value).join(', ');
 
-        setSelectedValue(prev => ({
+        setSelectedValue((prev: any) => ({
             ...prev,
             [name]: selectedValues || ''
         }));
@@ -57,14 +59,14 @@ const Filter = () => {
                 <div className="flex px-10 py-2 bg-white flex-col items-center border-gray-100 w-full border-t text-sm">
                     <div className="mt-4 flex flex-col gap-2">
                         {Object.keys(allFilters).map((key, index) => {
-                            const options = allFilters[key].values.map(value => ({
+                            const options = allFilters[key].values.map((value: any) => ({
                                 value: value,
                                 label: value,
                             }));
 
                             options.push({ value: "ALL", label: "ALL" });
 
-                            const defaultValue = activeFilter[key] ? activeFilter[key].split(',').map(value => ({
+                            const defaultValue = activeFilter[key] ? activeFilter[key].split(',').map((value: string) => ({
                                 value: value,
                                 label: value,
                             })) : [];
@@ -104,4 +106,4 @@ const Filter = () => {
     )
 }
 
-export default Filter;
+export default Filter

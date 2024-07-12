@@ -27,7 +27,7 @@ const LoginForm = () => {
     isAuth();
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -40,14 +40,14 @@ const LoginForm = () => {
       setIsLoading(false);
 
       router.push("/dashboard");
-    } catch (error) {
+    } catch (error: any) {
       alert(error.response.data.message);
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center px-6 mx-auto h-screen ">
+    <div className="flex flex-col items-center justify-center px-6 mx-auto h-screen bg-white">
       {/* Logo */}
       <Link href="/">
         <Image

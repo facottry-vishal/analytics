@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
+import ToggleTheme from "@/components/ToggleTheme";
 
 export default function Home() {
   return (
-    <div className="mx-5">
+    <div className="px-5 bg-white text-black">
       <nav className="flex justify-between items-center mt-5">
         <div>
           <h1 className="font-bold text-xl">Facottry Analytics</h1>
@@ -11,6 +11,7 @@ export default function Home() {
 
         <div className="flex gap-2 items-center">
           <ul className="flex gap-2">
+            <ToggleTheme />
             <Link
               href="/auth/login"
               className="font-semibold hover:bg-gray-100 transition-all border rounded-md p-2 text-primary600"

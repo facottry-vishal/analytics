@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { axios_analytics } from "@/lib/axios"
 import { activeFilterStore, userStore } from "@/lib/store"
-import { Loader } from "@/Components/Loader"
+import { Loader } from "@/components/Loader"
 
 const Logout = () => {
     const router = useRouter();
@@ -30,7 +30,7 @@ const Logout = () => {
                 localStorage.removeItem('selectedPlaygroundTab');
 
                 router.push('/auth/login');
-            } catch (error) {
+            } catch (error: any) {
                 console.log(error.response.data);
                 router.push('/');
             }

@@ -3,9 +3,9 @@ import { axios_analytics } from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { userStore, activeFilterStore } from "@/lib/store";
-import { Loader } from "@/Components/Loader";
+import { Loader } from "@/components/Loader";
 
-export default function Layout({ children }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
@@ -30,7 +30,7 @@ export default function Layout({ children }) {
       setProjects(projects);
       setCompany(company);
 
-      const currentProject = projects.find((p) => p.projectID === activeProject?.projectID) || projects[0];
+      const currentProject = projects.find((p: Project) => p.projectID === activeProject?.projectID) || projects[0];
       setActiveProject(currentProject);
 
       if (Object.keys(activeFilter).length === 0 && projects.length > 0) {
@@ -39,7 +39,7 @@ export default function Layout({ children }) {
       }
 
       setIsLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       router.push(error.response?.data.code === "NO_PROJECT" ? '/' : '/');
     }
