@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/dashboard/logmanager/page_legacy.jsx", "src/app/dashboard/home/page_legacy.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/dashboard/logmanager/page_legacy.jsx", "src/app/dashboard/home/page_legacy.jsx", "src/Components/Sidebar.tjsx"],
   "exclude": ["node_modules"]
 }

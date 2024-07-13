@@ -1,12 +1,13 @@
+/* eslint-disable react/prop-types */
+'use client'
 import { activeFilterStore, userStore } from "@/lib/store";
-import React from 'react'
+import React from 'react';
 import { IoPencilSharp } from "react-icons/io5";
-import Select from 'react-select'
+import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { toast } from "react-toastify";
 
-type Props = {}
-
+type Props = {};
 
 const Filter = ({ }: Props) => {
     const [activeFilter, setActiveFilter] = activeFilterStore(state => [state.activeFilter, state.setActiveFilter]);
@@ -32,7 +33,7 @@ const Filter = ({ }: Props) => {
             ...prev,
             [name]: selectedValues || ''
         }));
-    }
+    };
 
     return (
         <div className="w-fit text-sm min-w-[300px] sm:min-w-[500px] lg:min-w-[600px] border rounded-md mt-8">
@@ -40,7 +41,7 @@ const Filter = ({ }: Props) => {
                 <h1 className="text-lg font-bold text-center my-4">Select Filters</h1>
                 <div className="flex items-center justify-center gap-4">
                     {isCollapsed === false &&
-                        <button className="p-2 rounded-full  text-white bg-primary600 hover:bg-primary700 transition-all" onClick={() =>
+                        <button className="p-2 rounded-full text-white bg-primary600 hover:bg-primary700 transition-all" onClick={() =>
                             setIsFilterEditable(prev => !prev)
                         }>
                             <IoPencilSharp />
@@ -56,8 +57,8 @@ const Filter = ({ }: Props) => {
             </div>
 
             {!isCollapsed && <div>
-                <div className="flex px-10 py-2 bg-white flex-col items-center border-gray-100 w-full border-t text-sm">
-                    <div className="mt-4 flex flex-col gap-2">
+                <div className="px-10 py-2 bg-white border-gray-100 w-full border-t text-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {Object.keys(allFilters).map((key, index) => {
                             const options = allFilters[key].values.map((value: any) => ({
                                 value: value,
@@ -72,8 +73,8 @@ const Filter = ({ }: Props) => {
                             })) : [];
 
                             return (
-                                <div key={index} className="flex items-center justify-between">
-                                    <label className="mr-4 font-semibold">{key}:</label>
+                                <div key={index} className="flex flex-col">
+                                    <label className="mb-2 font-semibold">{key}:</label>
                                     <Select
                                         closeMenuOnSelect={true}
                                         components={animatedComponents}
@@ -84,26 +85,73 @@ const Filter = ({ }: Props) => {
                                         onChange={handleChange}
                                         defaultValue={defaultValue}
                                         isDisabled={isFilterEditable}
+                                        styles={{
+                                            container: (provided) => ({
+                                                ...provided,
+                                                maxWidth: '400px'
+                                            }),
+                                            control: (provided) => ({
+                                                ...provided,
+                                                display: 'flex',
+                                                flexWrap: 'nowrap', // Prevent wrapping
+                                                overflow: 'hidden', // Hide overflow content
+                                                maxHeight: '38px' // Fix the height to ensure no change
+                                            }),
+                                            valueContainer: (provided) => ({
+                                                ...provided,
+                                                maxHeight: '38px', // Fix the height to ensure no change
+                                                overflowY: 'scroll', // Enable vertical scroll
+                                                scrollbarWidth: 'none' /* Firefox */,
+                                                '::-webkit-scrollbar': { /* Chrome, Safari, Opera */
+                                                    display: 'none'
+                                                }
+                                            }),
+                                            multiValue: (provided) => ({
+                                                ...provided,
+                                                maxWidth: '300px',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                                whiteSpace: 'nowrap',
+                                            }),
+                                            multiValueLabel: (provided) => ({
+                                                ...provided,
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                                whiteSpace: 'nowrap',
+                                            })
+                                        }}
                                     />
                                 </div>
                             );
                         })}
                     </div>
 
-                    <button
-                        onClick={() => {
-                            setActiveFilter(selectedValue);
-                            toast.success("Filter Updated");
-                        }}
-                        disabled={isFilterEditable}
-                        className="font-medium border my-4 p-2 px-3 rounded-md shadow-sm hover:bg-gray-100 transition-all cursor-pointer disabled:bg-gray-200 disabled:cursor-text disabled:text-gray-500 disabled:border-gray-200"
-                    >
-                        Apply Filter
-                    </button>
+                    <div className="flex justify-center gap-5">
+                        <button
+                            onClick={() => {
+                                setActiveFilter(selectedValue);
+                                toast.success("Filter Updated");
+                            }}
+                            disabled={isFilterEditable}
+                            className="font-medium border my-4 p-2 px-3 rounded-md shadow-sm hover:bg-gray-100 transition-all cursor-pointer disabled:bg-gray-200 disabled:cursor-text disabled:text-gray-500 disabled:border-gray-200"
+                        >
+                            Apply Filter
+                        </button>
+                        <button
+                            onClick={() => {
+                                setActiveFilter(selectedValue);
+                                toast.success("Filter Updated");
+                            }}
+                            disabled={isFilterEditable}
+                            className="font-medium border my-4 p-2 px-3 rounded-md shadow-sm hover:bg-gray-100 transition-all cursor-pointer disabled:bg-gray-200 disabled:cursor-text disabled:text-gray-500 disabled:border-gray-200"
+                        >
+                            Update filters
+                        </button>
+                    </div>
                 </div>
             </div>}
         </div>
     )
 }
 
-export default Filter
+export default Filter;

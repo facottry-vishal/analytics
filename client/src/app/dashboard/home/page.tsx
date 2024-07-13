@@ -4,51 +4,44 @@ import { userStore } from "@/lib/store";
 import Link from "next/link";
 import ProjectSelector from "@/Components/ProjectSelector";
 import Filter from "@/components/Filter";
+import Sidebar from "@/Components/Sidebar";
+import Cards from "@/Components/Card";
 
 const Home = () => {
-  const [user] = userStore((state) => [
-    state.user,
-  ]);
+  const [user] = userStore((state) => [state.user]);
 
   return (
-    <div className="px-5 bg-white text-black">
-      <nav className="flex justify-between items-center mt-5">
-        <div>
-          <Link href={'/'} className="font-bold text-xl">Facottry Analytics</Link>
+    <div className="flex h-auto">
+      {/* Sidebar */}
+      <Sidebar />
+
+      {/* Main Content */}
+      <div className="flex-grow px-7 py-5 bg-gray-100  text-black">
+        <nav className="flex justify-between items-center mt-5">
+          <div>
+            <Link href={'/'} className="font-bold text-2xl">Dashboard</Link>
+          </div>
+          <div className="flex gap-2 items-center">
+            <ul className="flex gap-2">
+              <Link
+                href="/auth/logout"
+                className="font-semibold hover:bg-gray-100 transition-all border rounded-md p-2 text-primary600"
+              >
+                Logout
+              </Link>
+            </ul>
+          </div>
+        </nav>
+        <hr className="my-5" />
+        {/* Filter */}
+        <div className="flex flex-col items-center">
+          <Filter />
+          <div className="py-8 my-5">
+            <Cards />
+          </div>
         </div>
-
-        <div className="flex gap-2 items-center">
-          <ul className="flex gap-2">
-            <Link
-              href="/auth/logout"
-              className="font-semibold hover:bg-gray-100 transition-all border rounded-md p-2 text-primary600"
-            >
-              Logout
-            </Link>
-          </ul>
-        </div>
-      </nav>
-
-      <hr className="my-5" />
-
-      {/* User */}
-      <div>
-        <ul>
-          <li>{user?.email}</li>
-          <li>{user?.name}</li>
-        </ul>
-      </div>
-
-      <hr className="my-5" />
-
-      {/* Filter */}
-      <Filter />
-
-      <hr className="my-5" />
-
-      {/* Project Selector */}
-      <div className="max-w-sm">
-        <ProjectSelector />
+        <hr className="my-5" />
+        {/* Project Selector */}
       </div>
     </div>
   );
