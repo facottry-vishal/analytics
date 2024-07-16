@@ -3,7 +3,7 @@ import React from "react";
 import { userStore } from "@/lib/store";
 import Link from "next/link";
 import ProjectSelector from "@/Components/ProjectSelector";
-import Filter from "@/components/Filter";
+import Filter from "@/Components/Filter";
 import Sidebar from "@/Components/Sidebar";
 import Cards from "@/Components/Card";
 
@@ -16,8 +16,9 @@ const Home = () => {
       <div className="flex-none">
         <Sidebar />
       </div>
+
       {/* Main Content */}
-      <div className="flex-grow px-7 py-5 bg-gray-100  text-black">
+      <div className="flex-grow px-7 py-5 bg-gray-100 text-black overflow-auto">
         <nav className="flex justify-between items-center mt-5">
           <div>
             <Link href={'/'} className="font-bold text-2xl">Dashboard</Link>
