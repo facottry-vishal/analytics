@@ -11,10 +11,11 @@ const Home = () => {
   const [user] = userStore((state) => [state.user]);
 
   return (
-    <div className="flex h-auto">
+    <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
-      <Sidebar />
-
+      <div className="flex-none">
+        <Sidebar />
+      </div>
       {/* Main Content */}
       <div className="flex-grow px-7 py-5 bg-gray-100  text-black">
         <nav className="flex justify-between items-center mt-5">

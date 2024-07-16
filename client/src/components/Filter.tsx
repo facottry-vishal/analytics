@@ -6,6 +6,9 @@ import { IoPencilSharp } from "react-icons/io5";
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { toast } from "react-toastify";
+import { DateRangePicker } from 'react-date-range';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 
 type Props = {};
 
@@ -17,6 +20,13 @@ const Filter = ({ }: Props) => {
     const [selectedValue, setSelectedValue] = React.useState(activeFilter);
     const [isFilterEditable, setIsFilterEditable] = React.useState(true);
     const [isCollapsed, setIsCollapsed] = React.useState(false);
+    const [dateRange, setDateRange] = React.useState([
+        {
+            startDate: new Date(),
+            endDate: new Date(),
+            key: 'selection'
+        }
+    ]);
 
     const handleChange = (selectedOptions: any, { name }: any) => {
         const allSelected = selectedOptions.some((option: { value: string; }) => option.value === "ALL");
@@ -35,8 +45,20 @@ const Filter = ({ }: Props) => {
         }));
     };
 
+    const handleDateChange = (ranges: any) => {
+        const { selection } = ranges;
+        setDateRange([selection]);
+        setSelectedValue((prev: any) => ({
+            ...prev,
+            dateRange: {
+                startDate: selection.startDate,
+                endDate: selection.endDate
+            }
+        }));
+    };
+
     return (
-        <div className="w-fit text-sm min-w-[300px] sm:min-w-[500px] lg:min-w-[600px] border rounded-md mt-8">
+        <div className="w-fit text-sm min-w-[300px] sm:min-w-[500px] lg:min-w-[600px] border border-primary600 rounded-md mt-8">
             <div className="flex justify-between items-center px-5">
                 <h1 className="text-lg font-bold text-center my-4">Select Filters</h1>
                 <div className="flex items-center justify-center gap-4">
@@ -124,6 +146,19 @@ const Filter = ({ }: Props) => {
                                 </div>
                             );
                         })}
+                        <div className="flex flex-col col-span-1 sm:col-span-2 items-center relative">
+                            <label className="mb-2 font-semibold">Date Range:</label>
+                            <div className="flex justify-center relative">
+                                <DateRangePicker
+                                    ranges={dateRange}
+                                    onChange={handleDateChange}
+                                    className="w-full"
+                                />
+                                {isFilterEditable && (
+                                    <div className="absolute inset-0 bg-white opacity-50 cursor-not-allowed"></div>
+                                )}
+                            </div>
+                        </div>
                     </div>
 
                     <div className="flex justify-center gap-5">
