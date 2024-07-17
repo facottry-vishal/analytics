@@ -73,7 +73,7 @@ const Sidebar = () => {
 
       <hr className="mt-4 w-full" />
 
-      <div className="mt-4 min-w-[200px]">
+      <div className="mt-4">
         <ProjectSelector/>
 
         <Link href="/dashboard/project" className="mt-4 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm text-center hover:bg-gray-100 transition-all">

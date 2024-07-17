@@ -47,7 +47,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center px-6 mx-auto h-screen">
+    <div className="flex flex-col items-center justify-center px-6 mx-auto h-screen bg-white">
       {/* Logo */}
       <Link href="/">
         <Image
