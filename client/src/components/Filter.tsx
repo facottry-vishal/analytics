@@ -9,10 +9,11 @@ import { toast } from "react-toastify";
 import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
+import DateRange from "./dashboard/DatePicker";
 
 type Props = {};
 
-const Filter = ({ }: Props) => {
+const Filter = ({}: Props) => {
     const [activeFilter, setActiveFilter] = activeFilterStore(state => [state.activeFilter, state.setActiveFilter]);
     const activeProject = userStore(state => state.activeProject);
     const allFilters = activeProject?.filters || [];
@@ -20,13 +21,8 @@ const Filter = ({ }: Props) => {
     const [selectedValue, setSelectedValue] = React.useState(activeFilter);
     const [isFilterEditable, setIsFilterEditable] = React.useState(true);
     const [isCollapsed, setIsCollapsed] = React.useState(false);
-    const [dateRange, setDateRange] = React.useState([
-        {
-            startDate: new Date(),
-            endDate: new Date(),
-            key: 'selection'
-        }
-    ]);
+
+    console.log(activeFilter);
 
     const handleChange = (selectedOptions: any, { name }: any) => {
         const allSelected = selectedOptions.some((option: { value: string; }) => option.value === "ALL");
@@ -42,18 +38,6 @@ const Filter = ({ }: Props) => {
         setSelectedValue((prev: any) => ({
             ...prev,
             [name]: selectedValues || ''
-        }));
-    };
-
-    const handleDateChange = (ranges: any) => {
-        const { selection } = ranges;
-        setDateRange([selection]);
-        setSelectedValue((prev: any) => ({
-            ...prev,
-            dateRange: {
-                startDate: selection.startDate,
-                endDate: selection.endDate
-            }
         }));
     };
 
@@ -79,8 +63,11 @@ const Filter = ({ }: Props) => {
             </div>
 
             {!isCollapsed && <div>
-                <div className="px-10 py-2 bg-white border-gray-100 w-full border-t text-sm">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="px-10 py-2 flex flex-col bg-white border-gray-100 w-full border-t text-sm">
+                    <div className="flex flex-col gap-4 mt-5">
+                        <div className="w-full text-center">
+                            <DateRange />
+                        </div>
                         {Object.keys(allFilters).map((key, index) => {
                             const options = allFilters[key].values.map((value: any) => ({
                                 value: value,
@@ -98,7 +85,7 @@ const Filter = ({ }: Props) => {
                                 <div key={index} className="flex flex-col">
                                     <label className="mb-2 font-semibold">{key}:</label>
                                     <Select
-                                        closeMenuOnSelect={true}
+                                        closeMenuOnSelect={false}
                                         components={animatedComponents}
                                         isMulti
                                         options={options}
@@ -107,58 +94,10 @@ const Filter = ({ }: Props) => {
                                         onChange={handleChange}
                                         defaultValue={defaultValue}
                                         isDisabled={isFilterEditable}
-                                        styles={{
-                                            container: (provided) => ({
-                                                ...provided,
-                                                maxWidth: '400px'
-                                            }),
-                                            control: (provided) => ({
-                                                ...provided,
-                                                display: 'flex',
-                                                flexWrap: 'nowrap', // Prevent wrapping
-                                                overflow: 'hidden', // Hide overflow content
-                                                maxHeight: '38px' // Fix the height to ensure no change
-                                            }),
-                                            valueContainer: (provided) => ({
-                                                ...provided,
-                                                maxHeight: '38px', // Fix the height to ensure no change
-                                                overflowY: 'scroll', // Enable vertical scroll
-                                                scrollbarWidth: 'none' /* Firefox */,
-                                                '::-webkit-scrollbar': { /* Chrome, Safari, Opera */
-                                                    display: 'none'
-                                                }
-                                            }),
-                                            multiValue: (provided) => ({
-                                                ...provided,
-                                                maxWidth: '300px',
-                                                overflow: 'hidden',
-                                                textOverflow: 'ellipsis',
-                                                whiteSpace: 'nowrap',
-                                            }),
-                                            multiValueLabel: (provided) => ({
-                                                ...provided,
-                                                overflow: 'hidden',
-                                                textOverflow: 'ellipsis',
-                                                whiteSpace: 'nowrap',
-                                            })
-                                        }}
                                     />
                                 </div>
                             );
                         })}
-                        <div className="flex flex-col col-span-1 sm:col-span-2 items-center relative">
-                            <label className="mb-2 font-semibold">Date Range:</label>
-                            <div className="flex justify-center relative">
-                                <DateRangePicker
-                                    ranges={dateRange}
-                                    onChange={handleDateChange}
-                                    className="w-full"
-                                />
-                                {isFilterEditable && (
-                                    <div className="absolute inset-0 bg-white opacity-50 cursor-not-allowed"></div>
-                                )}
-                            </div>
-                        </div>
                     </div>
 
                     <div className="flex justify-center gap-5">
