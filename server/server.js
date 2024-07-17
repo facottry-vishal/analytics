@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import morgan from "morgan";
 import helmet from "helmet";
 import mainRouter from "./router/mainRouter.js";
+import b2bRouter from "./router/b2bRouter.js";
 
 // Const declarations
 dotenv.config();
@@ -58,3 +59,4 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", mainRouter);
+app.use('/analytics', b2bRouter);
