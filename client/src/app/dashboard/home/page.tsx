@@ -3,9 +3,9 @@ import React from "react";
 import { userStore } from "@/lib/store";
 import Link from "next/link";
 import ProjectSelector from "@/Components/ProjectSelector";
-import Filter from "@/Components/Filter";
-import Sidebar from "@/Components/Sidebar";
-import Cards from "@/Components/Card";
+import Cards from "@/components/Card";
+import Sidebar from "@/components/Sidebar";
+import Filter from "@/components/Filter";
 
 const Home = () => {
   const [user] = userStore((state) => [state.user]);
@@ -13,9 +13,7 @@ const Home = () => {
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
-      <div className="flex-none">
-        <Sidebar />
-      </div>
+      <Sidebar />
 
       {/* Main Content */}
       <div className="flex-grow px-7 py-5 bg-gray-100 text-black overflow-auto">
