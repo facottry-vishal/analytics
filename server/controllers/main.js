@@ -146,40 +146,7 @@ export const getUser = async (req, res) => {
   }
 };
 
-// FETCH LOGS FROM DATABASE
-export const getLogs = async (req, res) => {
-  try {
-    const { projectID, filter, limit, skip, startDate, endDate } = req.body;
-
-    switch (true) {
-      case !projectID:
-        return res.status(400).json({ message: "PROJECT ID NOT PROVIDED" });
-      case !startDate || !endDate:
-        return res.status(400).json({ message: "DATE RANGE NOT PROVIDED" });
-      case !filter:
-        return res.status(400).json({ message: "FILTER NOT PROVIDED" });
-    }
-
-    const startDateObj = new Date(startDate);
-    const endDateObj = new Date(endDate);
-    endDateObj.setHours(23, 59, 59, 999);
-
-    const logsData = await logs.find({
-      projectID,
-      createdAt: { $gte: startDateObj, $lte: endDateObj },
-    });
-
-    if (logsData.length === 0) {
-      return res.status(404).json({ message: "NO LOGS FOUND" });
-    }
-
-    return res.status(200).json({ data: logsData });
-  } catch (error) {
-    console.log(error.message);
-    return res.status(500).json({ message: error.message });
-  }
-};
-
+// GET COUNT OF FILTER VALUES
 export const getCount = async (req, res) => {
   try {
     const { projectID, filter, startDate, endDate } = req.body;
@@ -250,3 +217,67 @@ export const getCount = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+// GET LIST OF PATHNAMES
+export const getLogs = async (req, res) => {
+  try {
+    const { projectID, filter, startDate, endDate } = req.body;
+
+    switch (true) {
+      case !projectID:
+        return res.status(400).json({ message: "PROJECT ID NOT PROVIDED" });
+      case !filter:
+        return res.status(400).json({ message: "FILTER NOT PROVIDED" });
+    }
+
+    let searchFilter = {};
+    for (const key in filter) {
+      searchFilter[key] = filter[key].split(", ");
+    }
+
+    let filterConditions = Object.entries(searchFilter).reduce(
+      (acc, [key, value]) => {
+        if (Array.isArray(value)) {
+          return acc.flatMap((obj) =>
+            value.map((val) => ({ ...obj, [key]: val }))
+          );
+        } else {
+          return acc.map((obj) => ({ ...obj, [key]: value }));
+        }
+      },
+      [{}]
+    );
+
+    const startDateObj = new Date(startDate);
+    const endDateObj = new Date(endDate);
+    endDateObj.setHours(23, 59, 59, 999);
+
+    const pipeline = [
+      {
+        $match: {
+          projectID,
+          createdAt: { $gte: startDateObj, $lte: endDateObj },
+          $or: filterConditions.map((condition) => ({ filter: condition })),
+        },
+      },
+      {
+        $group: {
+          _id: "$filter",
+          pathnames: { $addToSet: "$pathnames" },
+        },
+      },
+    ];
+
+    const resObj = await logs.aggregate(pipeline).exec();
+
+    // Flatten the pathnames array
+    resObj.forEach((obj) => {
+      obj.pathnames = obj.pathnames.flat();
+    });
+
+    return res.status(200).json({ message: "SUCCESS", data: resObj });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ message: error.message });
+  }
+}
