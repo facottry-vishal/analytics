@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image"; import ToggleTheme from "@/components/ToggleTheme";
 import logo from "@/assets/logo_1.svg"
-import Button from "@/Components/global/ButtonGradient";
+import Button from "@/components/global/ButtonGradient";
 export default function Home() {
   return (
     <div className="px-5 bg-white text-black">
@@ -33,8 +33,8 @@ export default function Home() {
           <p className="relative text-lg mt-3 text-gray-400 text-left" style={{ top: '-75px' }}>
             Facottry Analytics is a dashboard that helps you to monitor your factory activities.
           </p>
-          <div className="relative" style={{bottom:'50px'}}>
-            <Button label="Login" link="/auth/login" className="mt-5" />
+          <div className="relative bottom-10">
+            <Button label="Login" link="/auth/login" />
           </div>
         </div>
         <div className="relative bottom-20 m-10" style={{right:'-100px', top:'-50px'}}>

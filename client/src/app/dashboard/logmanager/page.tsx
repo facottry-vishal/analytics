@@ -2,9 +2,9 @@
 import React from "react";
 import { userStore } from "@/lib/store";
 import Link from "next/link";
-import Filter from "@/Components/Filter";
-import Sidebar from "@/Components/Sidebar";
-import LogTable from "@/Components/dashboard/LogTable";
+import Filter from "@/components/Filter";
+import Sidebar from "@/components/Sidebar";
+import LogTable from "@/components/dashboard/LogTable";
 
 const LogManager = () => {
   const [user] = userStore((state) => [state.user]);

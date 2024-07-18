@@ -2,9 +2,9 @@
 import React from "react";
 import { userStore } from "@/lib/store";
 import Link from "next/link";
-import Cards from "@/Components/Card";
-import Sidebar from "@/Components/Sidebar";
-import Filter from "@/Components/Filter";
+import Cards from "@/components/Card";
+import Sidebar from "@/components/Sidebar";
+import Filter from "@/components/Filter";
 
 const Home = () => {
   const [user] = userStore((state) => [state.user]);
