@@ -1,24 +1,132 @@
 /* eslint-disable react/prop-types */
-'use client'
-import React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import { Grid, Divider } from '@mui/material';
+"use client";
+import React from "react";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import { Grid, Divider } from "@mui/material";
 import "tailwindcss/tailwind.css";
 
-const Cards = ({ result, showCountryData, showSubscriptionData, showOSData, showOSVersionData, showModelNameData, showPlanData, showStateData }) => {
+const Cards = () => {
+  const dummyData = {
+    countries: {
+      USA: 120,
+      India: 80,
+      UK: 50,
+      LK: 1000,
+      USSDG: 210,
+    },
+    subscriptions: {
+      Free: 200,
+      Basic: 150,
+      Premium: 100,
+      USA: 120,
+      India: 80,
+      UK: 50,
+      LK: 1000,
+      USA: 120,
+      India: 80,
+      UK: 50,
+      LK: 1000,
+    },
+    os: {
+      Windows: 300,
+      MacOS: 150,
+      Linux: 100,
+      USA: 120,
+      India: 80,
+      UK: 50,
+      LK: 1000,
+      USA: 120,
+      India: 80,
+      UK: 50,
+      LK: 1000,
+    },
+    osVersions: {
+      "Windows 10": 180,
+      "Windows 11": 120,
+      "MacOS Catalina": 90,
+      USA: 120,
+      India: 80,
+      UK: 50,
+      LK: 1000,
+      USA: 120,
+      India: 80,
+      UK: 50,
+      LK: 1000,
+    },
+    modelNames: {
+      "Model X": 70,
+      "Model Y": 60,
+      "Model Z": 50,
+      USA: 120,
+      India: 80,
+      UK: 50,
+      LK: 1000,
+      USA: 120,
+      India: 80,
+      UK: 50,
+      LK: 1000,
+    },
+    plans: {
+      Monthly: 250,
+      Yearly: 150,
+      Lifetime: 50,
+      USA: 120,
+      India: 80,
+      UK: 50,
+      LK: 1000,
+      USA: 120,
+      India: 80,
+      UK: 50,
+      LK: 1000,
+    },
+    states: {
+      California: 100,
+      Texas: 80,
+      "New York": 70,
+      USA: 120,
+      India: 80,
+      UK: 50,
+      LK: 1000,
+      USA: 120,
+      India: 80,
+      UK: 50,
+      LK: 1000,
+    },
+  };
+
   const renderCardContent = (title, items, heading) => (
-    <Card className="max-w-sm mb-4 rounded-lg shadow-md" style={{ border: '1px solid #3b82f6' }}>
-      <CardContent>
+    <Card
+      className="max-w-sm mb-4 rounded-lg shadow-md"
+      style={{ border: "1px solid #3b82f6" }}
+    >
+      <CardContent
+        style={{
+          maxHeight: "250px",
+          overflowY: "auto",
+          scrollbarWidth: "none" /* Firefox */,
+          "::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <Typography variant="body1" component="div" className="text-blue-900 font-medium text-center">
+            <Typography
+              variant="body1"
+              component="div"
+              className="text-blue-900 font-medium text-center"
+            >
               {heading}
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="body1" component="div" className="text-blue-900 font-medium text-center">
+            <Typography
+              variant="body1"
+              component="div"
+              className="text-blue-900 font-medium text-center"
+            >
               Count
             </Typography>
           </Grid>
@@ -27,13 +135,25 @@ const Cards = ({ result, showCountryData, showSubscriptionData, showOSData, show
           </Grid>
           {Object.entries(items).map(([key, value], index) => (
             <React.Fragment key={index}>
-              <Grid item xs={6} className="flex justify-center border-r border-gray-300">
-                <Typography variant="body1" component="div" className="text-gray-600">
+              <Grid
+                item
+                xs={6}
+                className="flex justify-center border-r border-gray-300"
+              >
+                <Typography
+                  variant="body1"
+                  component="div"
+                  className="text-gray-600"
+                >
                   {key}
                 </Typography>
               </Grid>
               <Grid item xs={6} className="flex justify-center">
-                <Typography variant="body1" component="div" className="text-gray-600">
+                <Typography
+                  variant="body1"
+                  component="div"
+                  className="text-gray-600"
+                >
                   {value}
                 </Typography>
               </Grid>
@@ -51,13 +171,17 @@ const Cards = ({ result, showCountryData, showSubscriptionData, showOSData, show
 
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {showCountryData && result.countries && Object.keys(result.countries).length > 0 && renderCardContent('Countries', result.countries, 'Country')}
-      {showSubscriptionData && result.subscriptions && Object.keys(result.subscriptions).length > 0 && renderCardContent('Subscriptions', result.subscriptions, 'Subscription')}
-      {showOSData && result.os && Object.keys(result.os).length > 0 && renderCardContent('Operating Systems', result.os, 'OS')}
-      {showOSVersionData && result.osVersions && Object.keys(result.osVersions).length > 0 && renderCardContent('OS Versions', result.osVersions, 'OS Version')}
-      {showModelNameData && result.modelNames && Object.keys(result.modelNames).length > 0 && renderCardContent('Model Names', result.modelNames, 'Model Name')}
-      {showPlanData && result.plans && Object.keys(result.plans).length > 0 && renderCardContent('Plans', result.plans, 'Plan')}
-      {showStateData && result.states && Object.keys(result.states).length > 0 && renderCardContent('States', result.states, 'State')}
+      {renderCardContent("Countries", dummyData.countries, "Country")}
+      {renderCardContent(
+        "Subscriptions",
+        dummyData.subscriptions,
+        "Subscription"
+      )}
+      {renderCardContent("Operating Systems", dummyData.os, "OS")}
+      {renderCardContent("OS Versions", dummyData.osVersions, "OS Version")}
+      {renderCardContent("Model Names", dummyData.modelNames, "Model Name")}
+      {renderCardContent("Plans", dummyData.plans, "Plan")}
+      {renderCardContent("States", dummyData.states, "State")}
     </div>
   );
 };
