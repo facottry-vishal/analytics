@@ -2,7 +2,6 @@
 import React from "react";
 import { userStore } from "@/lib/store";
 import Link from "next/link";
-import ProjectSelector from "@/Components/ProjectSelector";
 import Filter from "@/Components/Filter";
 import Sidebar from "@/Components/Sidebar";
 import LogTable from "@/Components/dashboard/LogTable";

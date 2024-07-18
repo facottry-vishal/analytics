@@ -85,7 +85,7 @@ const Filter = ({}: Props) => {
                                 <div key={index} className="flex flex-col">
                                     <label className="mb-2 font-semibold">{key}:</label>
                                     <Select
-                                        closeMenuOnSelect={false}
+                                        closeMenuOnSelect={true}
                                         components={animatedComponents}
                                         isMulti
                                         options={options}
@@ -94,13 +94,48 @@ const Filter = ({}: Props) => {
                                         onChange={handleChange}
                                         defaultValue={defaultValue}
                                         isDisabled={isFilterEditable}
+                                        styles={{
+                                            container: (provided) => ({
+                                                ...provided,
+                                                maxWidth: '400px'
+                                            }),
+                                            control: (provided) => ({
+                                                ...provided,
+                                                display: 'flex',
+                                                flexWrap: 'nowrap', // Prevent wrapping
+                                                overflow: 'hidden', // Hide overflow content
+                                                maxHeight: '38px' // Fix the height to ensure no change
+                                            }),
+                                            valueContainer: (provided) => ({
+                                                ...provided,
+                                                maxHeight: '38px', // Fix the height to ensure no change
+                                                overflowY: 'scroll', // Enable vertical scroll
+                                                scrollbarWidth: 'none' /* Firefox */,
+                                                '::-webkit-scrollbar': { /* Chrome, Safari, Opera */
+                                                    display: 'none'
+                                                }
+                                            }),
+                                            multiValue: (provided) => ({
+                                                ...provided,
+                                                maxWidth: '300px',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                                whiteSpace: 'nowrap',
+                                            }),
+                                            multiValueLabel: (provided) => ({
+                                                ...provided,
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                                whiteSpace: 'nowrap',
+                                            })
+                                        }}
                                     />
                                 </div>
                             );
                         })}
                     </div>
 
-                    <div className="flex justify-center gap-5">
+                    <div className="flex justify-center">
                         <button
                             onClick={() => {
                                 setActiveFilter(selectedValue);
@@ -110,16 +145,6 @@ const Filter = ({}: Props) => {
                             className="font-medium border my-4 p-2 px-3 rounded-md shadow-sm hover:bg-gray-100 transition-all cursor-pointer disabled:bg-gray-200 disabled:cursor-text disabled:text-gray-500 disabled:border-gray-200"
                         >
                             Apply Filter
-                        </button>
-                        <button
-                            onClick={() => {
-                                setActiveFilter(selectedValue);
-                                toast.success("Filter Updated");
-                            }}
-                            disabled={isFilterEditable}
-                            className="font-medium border my-4 p-2 px-3 rounded-md shadow-sm hover:bg-gray-100 transition-all cursor-pointer disabled:bg-gray-200 disabled:cursor-text disabled:text-gray-500 disabled:border-gray-200"
-                        >
-                            Update filters
                         </button>
                     </div>
                 </div>
