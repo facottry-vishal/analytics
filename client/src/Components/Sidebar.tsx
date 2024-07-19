@@ -43,7 +43,7 @@ const Sidebar = () => {
     <div className="w-80 bg-white dark:bg-darkblue p-8 pl-5 h-auto">
       <button className="flex gap-2 items-center mb-8">
         <Image
-          src={logo_dark_2}
+          src={logo_2}
           alt="FacOTTry"
           width={50}
           height={50}

@@ -1,108 +1,87 @@
-'use client'
-import { useState, useEffect } from 'react';
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  CardHeader,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  useTheme,
-} from '@mui/material';
+import React from 'react';
 
-const Reqres = ({ selectedEntry }) => {
-  const theme = useTheme();
-  const [url, setUrl] = useState('');
-  const [bodyKeyValues, setBodyKeyValues] = useState([]);
-  const [headerKeyValues, setHeaderKeyValues] = useState([]);
-  const [response, setResponse] = useState(null);
+const Reqres = ({ log, onClose }) => {
+  if (!log) {
+    return null;
+  }
 
-  useEffect(() => {
-    if (selectedEntry) {
-      setUrl(`/api/${selectedEntry.endpoint}`);
-      setBodyKeyValues(Object.entries(selectedEntry.body || {}).map(([key, value]) => ({ key, value })));
-      setHeaderKeyValues(Object.entries(selectedEntry.headers || {}).map(([key, value]) => ({ key, value })));
-      fetchResponse(selectedEntry);
-    }
-  }, [selectedEntry]);
-
-  const fetchResponse = async (entry) => {
-    try {
-      const response = await fetch('/api/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...entry.headers,
-        },
-        body: JSON.stringify(entry.body),
-      });
-      const data = await response.json();
-      setResponse(data);
-    } catch (error) {
-      console.error('Error fetching response:', error);
-    }
+  const renderObject = (obj) => {
+    return Object.keys(obj).map((key) => (
+      <tr key={key}>
+        <td className="border px-4 py-2 bg-gray-100 font-semibold">{key}</td>
+        <td className="border px-4 py-2">{JSON.stringify(obj[key], null, 2)}</td>
+      </tr>
+    ));
   };
 
-  const renderKeyValueTable = (keyValues) => (
-    <TableContainer>
-      <Table>
-        <TableHead sx={{ backgroundColor: theme.palette.primary.main }}>
-          <TableRow>
-            <TableCell sx={{ color: theme.palette.common.white }}>Key</TableCell>
-            <TableCell sx={{ color: theme.palette.common.white }}>Value</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {keyValues.map(({ key, value }, i) => (
-            <TableRow key={i}>
-              <TableCell>{key}</TableCell>
-              <TableCell>{value}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-
   return (
-    <Box sx={{ padding: '24px', backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
-      <Typography variant="h4" gutterBottom>
-        Request/Response Viewer
-      </Typography>
-      {selectedEntry && (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <Card>
-            <CardHeader title="URL" />
-            <CardContent>
-              <Typography variant="body1" sx={{ wordWrap: 'break-word' }}>
-                {url}
-              </Typography>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader title="Headers" />
-            <CardContent>{renderKeyValueTable(headerKeyValues)}</CardContent>
-          </Card>
-          <Card>
-            <CardHeader title="Body" />
-            <CardContent>{renderKeyValueTable(bodyKeyValues)}</CardContent>
-          </Card>
-          <Card>
-            <CardHeader title="Response" />
-            <CardContent>
-              {response ? renderKeyValueTable(Object.entries(response).map(([key, value]) => ({ key, value: JSON.stringify(value) }))) : (
-                <Typography variant="body1">No response</Typography>
-              )}
-            </CardContent>
-          </Card>
-        </Box>
-      )}
-    </Box>
+    <div className="p-6 bg-white rounded-lg shadow-lg">
+      <button
+        onClick={onClose}
+        className="mb-6 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+      >
+        Close
+      </button>
+      <div className="border border-gray-200 rounded-lg mb-6 overflow-hidden">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th colSpan="2" className="px-4 py-2 text-left text-lg font-medium text-gray-700 uppercase tracking-wider">
+                Request
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            <tr>
+              <td className="border px-4 py-2 bg-gray-100 font-bold">URL</td>
+              <td className="border px-4 py-2">{log.projectID}</td>
+            </tr>
+            <tr>
+              <td colSpan="2" className="border px-4 py-2">
+                <div className="font-bold mb-2">Body</div>
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Key</th>
+                      <th className="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>{renderObject(log.filter)}</tbody>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td colSpan="2" className="border px-4 py-2">
+                <div className="font-bold mb-2">Headers</div>
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Key</th>
+                      <th className="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>{renderObject(log.filter)}</tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className="border border-gray-200 rounded-lg overflow-hidden">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-4 py-2 text-left text-lg font-medium text-gray-700 uppercase tracking-wider">Response</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            <tr>
+              <td className="border px-4 py-2 whitespace-pre-wrap">{JSON.stringify(log, null, 2)}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 };
 

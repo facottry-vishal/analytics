@@ -1,22 +1,38 @@
-"use client";
-import React from "react";
-import { userStore } from "@/lib/store";
-import Link from "next/link";
-import Filter from "@/components/Filter";
-import Sidebar from "@/components/Sidebar";
-import LogTable from "@/components/dashboard/LogTable";
+'use client'
+import React, { useEffect, useState } from 'react';
+import { userStore } from '@/lib/store';
+import Link from 'next/link';
+import LogFilter from '@/Components/LogFilters';
+import Sidebar from '@/Components/Sidebar';
+import LogTable from '@/Components/dashboard/LogTable';
+import axios from 'axios';
 
 const LogManager = () => {
   const [user] = userStore((state) => [state.user]);
+  const [logs, setLogs] = useState([]);
+
+  useEffect(() => {
+    const fetchLogs = async () => {
+      try {
+        const response = await axios.get('/api/logs/get', {
+          headers: {
+            Authorization: `Bearer ${user.token}`
+          }
+        });
+        setLogs(response.data);
+      } catch (error) {
+        console.error('Error fetching logs:', error);
+      }
+    };
+
+    fetchLogs();
+  }, [user]);
 
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
       <div className="flex-none">
         <Sidebar />
       </div>
-
-      {/* Main Content */}
       <div className="flex-grow px-7 py-5 bg-gray-100 text-black overflow-auto">
         <nav className="flex justify-between items-center mt-5">
           <div>
@@ -34,15 +50,13 @@ const LogManager = () => {
           </div>
         </nav>
         <hr className="my-5" />
-        {/* Filter */}
         <div className="flex flex-col items-center">
-          <Filter />
-          <div className="py-8 my-5">
-            <LogTable />
+          <LogFilter />
+          <div className="py-8 my-5 mx-5 px-8 w-full overflow-hidden">
+            <LogTable logs={logs} />
           </div>
         </div>
         <hr className="my-5" />
-        {/* Project Selector */}
       </div>
     </div>
   );
