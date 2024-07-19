@@ -12,6 +12,11 @@ const logSchema = new mongoose.Schema(
       default: {},
     },
 
+    count : {
+      type: Number,
+      default: 1,
+    },
+
     pathnames: {
       type: [String],
       default: [],

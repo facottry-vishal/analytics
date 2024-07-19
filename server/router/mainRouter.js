@@ -1,11 +1,17 @@
 import { Router } from "express";
-import { getAdmin, getCount, getLogs, getUser, isAuth, loginUser, logoutUser, updateCount, updateLogs } from "../controllers/main.js";
+import {
+  getAdmin,
+  getCount,
+  getLogs,
+  getUser,
+  isAuth,
+  loginUser,
+  logoutUser,
+} from "../controllers/main.js";
 const router = Router();
 
 // UNPROTECTED ROUTES **************************************************
 router.post("/login", loginUser);
-
-
 
 // PROTECTED ROUTES ****************************************************
 router.use(isAuth);
@@ -15,19 +21,13 @@ router.get("/get-admin", getAdmin);
 router.get("/get-user", getUser);
 router.get("/logout", logoutUser);
 
-// COUNT
-router.get('/count/get', getCount);
-router.post('/count/update', updateCount);
-
-// LOGS
-router.get('/logs/get', getLogs);
-router.post('/logs/update', updateLogs);
+// COUNT & LOGS
+router.post("/get-logs", getLogs);
+router.post("/get-count", getCount);
 
 // DEFAULT
 router.get("/", (req, res) => {
-  return res
-    .status(200)
-    .json({ message: 'AUTHORIZED'});
+  return res.status(200).json({ message: "AUTHORIZED" });
 });
 
 export default router;
