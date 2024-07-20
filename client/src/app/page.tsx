@@ -5,8 +5,12 @@ import { ModeToggle } from "@/components/ToggleTheme";
 import logo from "@/assets/logo_1.svg";
 import logo_dark from "@/assets/logo_dark_1.svg";
 import { Button } from "@/components/ui/button";
+import { userStore } from "@/lib/store";
 
 export default function Home() {
+  const [user] = userStore((state) => [state.user]);
+  console.log(user);
+
   return (
     <div className="min-h-screen bg-background text-primary pt-5 px-8 dark:text-white max-w-7xl m-auto">
       <nav className="flex justify-between items-center">
@@ -16,19 +20,33 @@ export default function Home() {
         </div>
         <ul className="flex gap-2">
           <ModeToggle />
-          <Button>
-            <Link href="/auth/login" >
-              Login
-            </Link>
-          </Button>
-          <Button>
-            <Link href="/dashboard/home">
-              Dashboard
-            </Link>
-          </Button>
+
+          {user ? (
+            <div className="flex gap-2">
+              <Button>
+                <Link href="/dashboard/home">
+                  Dashboard
+                </Link>
+              </Button>
+              <Button variant={"outline"}>
+                <Link href="/auth/logout">
+                  Logout
+                </Link>
+              </Button>
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              <Button >
+                <Link href="/auth/login" >
+                  Login
+                </Link>
+              </Button>
+            </div>
+          )
+          }
         </ul>
       </nav>
-      
+
     </div>
   );
 }

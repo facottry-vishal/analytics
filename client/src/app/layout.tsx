@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider } from "./provider";
+import { Toaster } from "@/components/ui/toaster";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -55,6 +56,7 @@ export default function RootLayout({
           pauseOnHover
           theme="dark"
         />
+        <Toaster />
       </body>
     </html>
   )
