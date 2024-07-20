@@ -10,6 +10,8 @@ import React from "react";
 import { FlipWords } from "@/components/aceternity/flip-words";
 import { Spotlight } from "@/components/aceternity/spotlight";
 import { HoverBorderGradient } from "@/components/aceternity/hover-border-gradient";
+import heroImageDark from "@/assets/hero-dark@90.dba36cdf.jpg";
+import heroImageLight from "@/assets/hero@75.b2469a49.jpg";
 
 export default function Home() {
   const [user] = userStore((state) => [state.user]);
@@ -17,8 +19,11 @@ export default function Home() {
 
   return (
     <div className="relative dark:bg-grid-white/[0.2] bg-grid-black/[0.2]">
+      <Image src={heroImageDark} alt="heroDark" className="absolute h-screen inset-0 z-0 opacity-70 blur-lg dark:block hidden" />
+      <Image src={heroImageLight} alt="heroLight" className="absolute h-screen inset-0 z-0 opacity-80 blur-lg dark:hidden" />
+
       {/* Masking the background */}
-      <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] z-0" />
+      <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] z-10" />
 
       <Spotlight
         className="-top-40 left-0 md:left-60 md:-top-20"
@@ -72,7 +77,7 @@ export default function Home() {
         {/* Hero */}
         <section className="">
           <div className="h-[40rem] w-full bg-inherit flex flex-col items-center justify-center overflow-hidden rounded-md">
-            <div className="text-7xl font-bold mx-auto text-zinc-600 dark:text-zinc-400 flex flex-col justify-center mb-10 items-center">
+            <div className="text-4xl sm:text-5xl md:text-7xl xl:text-[6rem] font-bold mx-auto text-zinc-600 dark:text-zinc-400 flex flex-col justify-self-center mb-10 items-center">
               <div><FlipWords words={words} /> your app</div>
               <div>with FacOTTry</div>
             </div>
@@ -80,7 +85,7 @@ export default function Home() {
             <HoverBorderGradient
               containerClassName="rounded-full"
               as="button"
-              className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+              className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2 xl:text-2xl font-semibold"
               onClick={() => console.log("Get Started")}
             >
               <span>Get Started</span>
