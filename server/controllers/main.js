@@ -280,4 +280,37 @@ export const getLogs = async (req, res) => {
     console.log(error.message);
     return res.status(500).json({ message: error.message });
   }
-}
+};
+
+// GET INDIVIDIAL LOG BY PATHNAME
+export const getLogData = async (req, res) => {
+  try {
+    const backendURL = process.env.MAIN_SERVER_URL;
+    const backendResponse = await axios.get(backendURL + "/scale/get-log-by-id", {
+      headers: {
+      Authorization: req.headers.authorization,
+      Cookie: req.headers.cookie,
+      },
+      params: {
+      pathname: req.query.pathname
+      }
+    });
+
+    // Forward only necessary headers
+    const headersToForward = ["content-type", "authorization", "set-cookie"];
+    headersToForward.forEach((header) => {
+      if (backendResponse.headers[header]) {
+        res.setHeader(header, backendResponse.headers[header]);
+      }
+    });
+
+    // Forward the status and data from backendResponse to the client
+    return res.status(backendResponse.status).send(backendResponse.data);
+  } catch (error) {
+    if (error.response) {
+      return res.status(error.response.status).json(error.response.data);
+    } else {
+      return res.status(500).json({ message: "INTERNAL SERVER ERROR" });
+    }
+  }
+};

@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   getAdmin,
   getCount,
+  getLogData,
   getLogs,
   getUser,
   isAuth,
@@ -24,6 +25,7 @@ router.get("/logout", logoutUser);
 // COUNT & LOGS
 router.post("/get-logs", getLogs);
 router.post("/get-count", getCount);
+router.get('/get-log-by-id', getLogData);
 
 // DEFAULT
 router.get("/", (req, res) => {
