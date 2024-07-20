@@ -7,8 +7,16 @@ import logo_2 from '@/assets/logo_2.svg';
 import logo_dark_2 from '@/assets/logo_dark_2.svg';
 import { userStore, globalStore } from "@/lib/store";
 import ProjectSelector from './ProjectSelector';
+import { ToggleButton } from "./global/ToggleButton";
 
-const SidebarButton = ({ href, label, icon, target }) => (
+type SidebarButtonProps = {
+  href: string;
+  label: string;
+  icon: React.ReactNode;
+  target?: string;
+};
+
+const SidebarButton = ({ href, label, icon, target }: SidebarButtonProps) => (
   <Link href={href} target={target} className="flex items-center p-3 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition">
     <span className="mr-3 text-xl">{icon}</span>
     {label}
