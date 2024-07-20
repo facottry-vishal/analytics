@@ -6,16 +6,19 @@ import { userStore, activeFilterStore } from "@/lib/store";
 import { Loader } from "@/components/Loader";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/aceternity/sidebar";
 import {
-  IconArrowLeft,
-  IconBrandTabler,
+  IconLogout2,
+  IconDashboard,
   IconSettings,
-  IconUserBolt,
+  IconArticle,
+  IconX,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import logo_2 from "@/assets/logo_2.svg";
 import logo_dark_2 from "@/assets/logo_dark_2.svg";
+import { ProjectSelector } from "@/components/facottry/project-selector";
+import { Separator } from "@/components/ui/separator";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -73,7 +76,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         "h-screen"
       )}>
         <Sidebar open={open} setOpen={setOpen}>
-          <SidebarBody className="justify-between gap-10">
+          <SidebarBody className="justify-between relative gap-10 font-semibold">
             <div className="flex flex-col flex-1 overflow-y-auto">
               <Link href='/' className="flex gap-2 items-center">
                 <Image
@@ -91,8 +94,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   className="hidden dark:block"
                 />
                 {open && (
-                  <p className="font-extrabold text-xl">
-                    Fac<span className="">OTT</span>ry
+                  <p className="font-bold text-2xl">
+                    FacOTTry
                   </p>
                 )}
               </Link>
@@ -101,24 +104,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <SidebarLink key={idx} link={link} />
                 ))}
               </div>
+
+              <Separator className="my-4" />
+
+              {open && (
+                <div className="w-[97%] mx-auto mt-4 ">
+                  <ProjectSelector />
+                </div>
+              )}
             </div>
-            <div>
-              <SidebarLink
-                link={{
-                  label: "User",
-                  href: "#",
-                  icon: (
-                    <Image
-                      src="https://res.cloudinary.com/djqdugthw/image/upload/v1721501933/thumbs-1688889944751_w9xb0e_qxawuv.svg"
-                      className="h-7 w-7 flex-shrink-0 rounded-full"
-                      width={50}
-                      height={50}
-                      alt="Avatar"
-                    />
-                  ),
-                }}
-              />
-            </div>
+
+
+            {open && (
+              <button className="absolute right-5 bottom-5 z-50 text-zinc-800 dark:text-zinc-200" onClick={() => setOpen(false)}>
+                <IconX />
+              </button>
+            )}
           </SidebarBody>
         </Sidebar>
         {children}
@@ -130,30 +131,30 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 const links = [
   {
     label: "Dashboard",
-    href: "#",
+    href: "/dashboard/home",
     icon: (
-      <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      <IconDashboard className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
     ),
   },
   {
-    label: "Profile",
-    href: "#",
+    label: "Log Manager",
+    href: "/dashboard/logs",
     icon: (
-      <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      <IconArticle className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
     ),
   },
   {
     label: "Settings",
-    href: "#",
+    href: "/dashboard/settings",
     icon: (
-      <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      <IconSettings className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
     ),
   },
   {
     label: "Logout",
-    href: "#",
+    href: "/auth/logout",
     icon: (
-      <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      <IconLogout2 className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
     ),
   },
 ];

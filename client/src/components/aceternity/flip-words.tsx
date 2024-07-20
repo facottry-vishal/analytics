@@ -1,11 +1,11 @@
 "use client";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, LayoutGroup } from "framer-motion";
+import React, { useCallback, useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export const FlipWords = ({
     words,
-    duration = 3000,
+    duration = 2000,
     className,
 }: {
     words: string[];
@@ -14,6 +14,7 @@ export const FlipWords = ({
 }) => {
     const [currentWord, setCurrentWord] = useState(words[0]);
     const [isAnimating, setIsAnimating] = useState<boolean>(false);
+    const [isClient, setIsClient] = useState<boolean>(false);
 
     // thanks for the fix Julian - https://github.com/Julian-AT
     const startAnimation = useCallback(() => {
@@ -23,11 +24,23 @@ export const FlipWords = ({
     }, [currentWord, words]);
 
     useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    useEffect(() => {
         if (!isAnimating)
             setTimeout(() => {
                 startAnimation();
             }, duration);
     }, [isAnimating, duration, startAnimation]);
+
+    if (!isClient) {
+        return (
+            <div className={cn("z-10 inline-block relative text-left text-neutral-900 dark:text-neutral-100 px-2", className)}>
+                {currentWord}
+            </div>
+        );
+    }
 
     return (
         <AnimatePresence

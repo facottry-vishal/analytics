@@ -9,6 +9,7 @@ import { userStore } from "@/lib/store";
 import React from "react";
 import { FlipWords } from "@/components/aceternity/flip-words";
 import { Spotlight } from "@/components/aceternity/spotlight";
+import { HoverBorderGradient } from "@/components/aceternity/hover-border-gradient";
 
 export default function Home() {
   const [user] = userStore((state) => [state.user]);
@@ -71,10 +72,19 @@ export default function Home() {
         {/* Hero */}
         <section className="">
           <div className="h-[40rem] w-full bg-inherit flex flex-col items-center justify-center overflow-hidden rounded-md">
-            <div className="text-7xl font-bold mx-auto text-neutral-600 dark:text-neutral-400 flex flex-col justify-center mb-10 items-center">
+            <div className="text-7xl font-bold mx-auto text-zinc-600 dark:text-zinc-400 flex flex-col justify-center mb-10 items-center">
               <div><FlipWords words={words} /> your app</div>
               <div>with FacOTTry</div>
             </div>
+
+            <HoverBorderGradient
+              containerClassName="rounded-full"
+              as="button"
+              className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+              onClick={() => console.log("Get Started")}
+            >
+              <span>Get Started</span>
+            </HoverBorderGradient>
           </div>
         </section>
       </div>
