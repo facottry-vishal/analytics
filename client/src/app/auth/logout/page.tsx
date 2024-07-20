@@ -29,7 +29,7 @@ const Logout = () => {
                 localStorage.removeItem('selectedSettingTab');
                 localStorage.removeItem('selectedPlaygroundTab');
 
-                router.push('/auth/login');
+                router.push('/');
             } catch (error: any) {
                 console.log(error.response.data);
                 router.push('/');

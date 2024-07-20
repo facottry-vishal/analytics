@@ -60,9 +60,12 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center px-6 mx-auto h-screen">
+    <div className="dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2] relative flex flex-col items-center justify-center px-6 mx-auto h-screen">
+
+      <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] z-0" />
+
       {/* Logo */}
-      <Link href="/">
+      <Link className="z-10" href="/">
         <Image
           src={logo_1}
           priority={true}
@@ -81,7 +84,7 @@ const LoginForm = () => {
         />
       </Link>
 
-      <div className="w-full bg-background shadow-lg border rounded-lg md:mt-0 sm:max-w-md xl:p-0">
+      <div className="w-full z-10 bg-background shadow-lg border rounded-lg md:mt-0 sm:max-w-md xl:p-0">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl">
             Login
@@ -170,26 +173,6 @@ const LoginForm = () => {
                 <p>Continue with Google</p>
               </Link>
             </Button>
-
-            <p className="mb-2 text-sm text-gray-500">
-              Forgot Password?{" "}
-              <Link
-                href="/auth/forgot-password"
-                className="font-semibold text-primary-600 hover:underline"
-              >
-                Reset
-              </Link>
-            </p>
-
-            <p className="text-sm text-gray-500">
-              Don’t have an account yet?{" "}
-              <Link
-                href="/auth/signup"
-                className="font-semibold text-primary-600 hover:underline"
-              >
-                Sign up
-              </Link>
-            </p>
           </form>
         </div>
       </div>
