@@ -87,7 +87,7 @@ export const DesktopSidebar = ({
         className={cn(
           "h-full px-4 py-4 hidden md:flex md:flex-col bg-primary-foreground w-[300px] flex-shrink-0",
           className,
-          open ? "shadow-lg rounded-xl" : ""
+          open ? "" : ""
         )}
         animate={{
           width: open ? "300px" : "60px",

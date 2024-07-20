@@ -85,7 +85,7 @@ export default function Home() {
             <HoverBorderGradient
               containerClassName="rounded-full"
               as="button"
-              className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2 xl:text-2xl font-semibold"
+              className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2 xl:text-lg font-semibold"
               onClick={() => console.log("Get Started")}
             >
               <span>Get Started</span>

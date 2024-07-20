@@ -11,7 +11,7 @@
     --popover: #ffffff;
     --popover-foreground: #0a0a0a;
     --primary: #0d0d0d;
-    --primary-foreground: #fafafa;
+    --primary-foreground: #e5e7eb;
     --secondary: #f2f2f2;
     --secondary-foreground: #0d0d0d;
     --muted: #f2f2f2;
@@ -32,30 +32,30 @@
   }
 
   .dark {
-    --background: #090a0b;
-    --foreground: #fafafa;
-    --card: #090a0b;
-    --card-foreground: #fafafa;
-    --popover: #090a0b;
-    --popover-foreground: #fafafa;
-    --primary: #fafafa;
-    --primary-foreground: #16181a;
-    --secondary: #1e1f21;
-    --secondary-foreground: #fafafa;
-    --muted: #1e1f21;
-    --muted-foreground: #a6aab4;
-    --accent: #1e1f21;
-    --accent-foreground: #fafafa;
-    --destructive: #992a1f;
-    --destructive-foreground: #fafafa;
-    --border: #1e1f21;
-    --input: #1e1f21;
-    --ring: #d9e0f2;
-    --chart-1: #3399ff;
-    --chart-2: #33cc99;
-    --chart-3: #ffaa33;
-    --chart-4: #cc66ff;
-    --chart-5: #ff3399;
+    --background: #090a0b; /* HSL(240, 10%, 3.9%) */
+    --foreground: #fafafa; /* HSL(0, 0%, 98%) */
+    --card: #090a0b; /* HSL(240, 10%, 3.9%) */
+    --card-foreground: #fafafa; /* HSL(0, 0%, 98%) */
+    --popover: #090a0b; /* HSL(240, 10%, 3.9%) */
+    --popover-foreground: #fafafa; /* HSL(0, 0%, 98%) */
+    --primary: #fafafa; /* HSL(0, 0%, 98%) */
+    --primary-foreground: #1e2124; /* HSL(240, 5.9%, 10%) */
+    --secondary: #1e1f21; /* HSL(240, 3.7%, 15.9%) */
+    --secondary-foreground: #fafafa; /* HSL(0, 0%, 98%) */
+    --muted: #1e1f21; /* HSL(240, 3.7%, 15.9%) */
+    --muted-foreground: #a6aab4; /* HSL(240, 5%, 64.9%) */
+    --accent: #1e1f21; /* HSL(240, 3.7%, 15.9%) */
+    --accent-foreground: #fafafa; /* HSL(0, 0%, 98%) */
+    --destructive: #992a1f; /* HSL(0, 62.8%, 30.6%) */
+    --destructive-foreground: #fafafa; /* HSL(0, 0%, 98%) */
+    --border: #1e1f21; /* HSL(240, 3.7%, 15.9%) */
+    --input: #1e1f21; /* HSL(240, 3.7%, 15.9%) */
+    --ring: #d9e0f2; /* HSL(240, 4.9%, 83.9%) */
+    --chart-1: #3399ff; /* HSL(220, 70%, 50%) */
+    --chart-2: #33cc99; /* HSL(160, 60%, 45%) */
+    --chart-3: #ffaa33; /* HSL(30, 80%, 55%) */
+    --chart-4: #cc66ff; /* HSL(280, 65%, 60%) */
+    --chart-5: #ff3399; /* HSL(340, 75%, 55%) */
   }
 }
 

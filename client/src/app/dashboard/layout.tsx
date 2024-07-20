@@ -19,6 +19,7 @@ import logo_2 from "@/assets/logo_2.svg";
 import logo_dark_2 from "@/assets/logo_dark_2.svg";
 import { ProjectSelector } from "@/components/facottry/project-selector";
 import { Separator } from "@/components/ui/separator";
+import DashboardNav from "./dashboardNav";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -34,6 +35,37 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     setProjects: state.setProjects,
     setUser: state.setUser
   }));
+
+  const links = [
+    {
+      label: "Dashboard",
+      href: "/dashboard/home",
+      icon: (
+        <IconDashboard className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Log Manager",
+      href: "/dashboard/logs",
+      icon: (
+        <IconArticle className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Settings",
+      href: "/dashboard/settings",
+      icon: (
+        <IconSettings className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Logout",
+      href: "/auth/logout",
+      icon: (
+        <IconLogout2 className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
+      ),
+    },
+  ];
 
   const fetchData = async () => {
     try {
@@ -122,39 +154,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             )}
           </SidebarBody>
         </Sidebar>
-        {children}
-      </main>
+
+        <div className="w-full flex flex-col gap-4 pt-5 px-10">
+          <DashboardNav title="Dashboard" />
+          {children}
+        </div>
+      </main >
     )
   }
 }
-
-const links = [
-  {
-    label: "Dashboard",
-    href: "/dashboard/home",
-    icon: (
-      <IconDashboard className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
-    ),
-  },
-  {
-    label: "Log Manager",
-    href: "/dashboard/logs",
-    icon: (
-      <IconArticle className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
-    ),
-  },
-  {
-    label: "Settings",
-    href: "/dashboard/settings",
-    icon: (
-      <IconSettings className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
-    ),
-  },
-  {
-    label: "Logout",
-    href: "/auth/logout",
-    icon: (
-      <IconLogout2 className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
-    ),
-  },
-];
