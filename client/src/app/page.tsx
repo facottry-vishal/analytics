@@ -2,29 +2,50 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ModeToggle } from "@/components/ToggleTheme";
-import logo from "@/assets/logo_1.svg";
-import logo_dark from "@/assets/logo_dark_1.svg";
+import logo_2 from "@/assets/logo_2.svg";
+import logo_dark_2 from "@/assets/logo_dark_2.svg";
 import { Button } from "@/components/ui/button";
 import { userStore } from "@/lib/store";
 import React from "react";
 import { FlipWords } from "@/components/aceternity/flip-words";
+import { Spotlight } from "@/components/aceternity/spotlight";
 
 export default function Home() {
   const [user] = userStore((state) => [state.user]);
-  const words = ["Scale", "Optimize", "Automate", "Monitor", "Analyze"];
+  const words = ["Analyze", "Monitor", "Optimize", "Scale"];
 
   return (
     <div className="relative dark:bg-grid-white/[0.2] bg-grid-black/[0.2]">
       {/* Masking the background */}
       <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] z-0" />
 
+      <Spotlight
+        className="-top-40 left-0 md:left-60 md:-top-20"
+        fill="white"
+      />
+
       {/* Main content */}
-      <div className="relative z-10 min-h-screen bg-inherit text-primary pt-5 px-8 dark:text-white max-w-7xl m-auto">
+      <div className="relative z-10 min-h-screen bg-inherit text-primary pt-5 px-8  max-w-7xl m-auto">
         <nav className="flex justify-between items-center">
-          <div>
-            <Image src={logo} className="dark:hidden" alt="Facottry Logo" width={100} height={100} />
-            <Image src={logo_dark} className="hidden dark:block" alt="Facottry Logo" width={100} height={100} />
-          </div>
+          <Link href='/' className="flex gap-2 items-center">
+            <Image
+              src={logo_2}
+              alt="FacOTTry"
+              width={50}
+              height={50}
+              className="dark:hidden"
+            />
+            <Image
+              src={logo_dark_2}
+              alt="FacOTTry"
+              width={50}
+              height={50}
+              className="hidden dark:block"
+            />
+            <p className="font-extrabold text-2xl">
+              Fac<span className="">OTT</span>ry
+            </p>
+          </Link>
           <ul className="flex gap-2">
             <ModeToggle />
 
