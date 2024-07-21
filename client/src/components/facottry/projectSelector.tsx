@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { activeFilterStore, userStore } from "@/lib/store";
+import { toast } from "react-toastify";
 
 export function ProjectSelector() {
   const {
@@ -37,6 +38,7 @@ export function ProjectSelector() {
       if (project) {
         setActiveProject(project);
         setActiveFilter(Object.keys(project.filters).reduce((acc, key) => ({ ...acc, [key]: "" }), {}));
+        toast.success("Project Changed");
       }
     } catch (error) {
       console.error(error);
