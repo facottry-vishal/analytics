@@ -32,6 +32,19 @@ const Logout = () => {
                 router.push('/');
             } catch (error: any) {
                 console.log(error.response.data);
+
+                if (error.response.status === 401) {
+                    setProjects([]);
+                    setActiveProject(null);
+                    setUser(null);
+                    setCompany(null);
+                    setActiveFilter({});
+
+                    //clear local storage
+                    localStorage.removeItem('selectedDashboardTab');
+                    localStorage.removeItem('selectedSettingTab');
+                    localStorage.removeItem('selectedPlaygroundTab');
+                }
                 router.push('/');
             }
         }

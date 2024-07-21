@@ -18,7 +18,7 @@ export default function Home() {
   const words = ["Analyze", "Monitor", "Optimize", "Scale"];
 
   return (
-    <div className="relative dark:bg-grid-white/[0.2] bg-grid-black/[0.2]">
+    <div className="relative dark:bg-grid-white/[0.2] bg-grid-black/[0.2] textsm">
       <Image src={heroImageDark} alt="heroDark" className="absolute h-screen inset-0 z-0 opacity-70 blur-lg dark:block hidden" />
       <Image src={heroImageLight} alt="heroLight" className="absolute h-screen inset-0 z-0 opacity-80 blur-lg dark:hidden" />
 

@@ -10,7 +10,6 @@ import {
   IconDashboard,
   IconSettings,
   IconArticle,
-  IconX,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -104,12 +103,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   } else {
     return (
       <main className={cn(
-        "rounded-md flex flex-col md:flex-row bg-background w-full flex-1 mx-auto border overflow-hidden",
+        "flex flex-col md:flex-row bg-primary-foreground w-full flex-1 mx-auto overflow-hidden text-sm",
         "h-screen"
       )}>
         <Sidebar open={open} setOpen={setOpen}>
           <SidebarBody className="justify-between md:relative gap-10 font-semibold">
-            <div className="flex flex-col flex-1 overflow-y-auto">
+            <div className="flex flex-col flex-1 overflow-y-auto mt-4">
               <Link href='/' className="flex gap-2 items-center">
                 <Image
                   src={logo_2}
@@ -149,7 +148,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </Sidebar>
 
         <div className="w-full flex flex-col gap-4 pt-5 px-10">
-          <DashboardNav title="Dashboard" />
+          <DashboardNav />
           {children}
         </div>
       </main >

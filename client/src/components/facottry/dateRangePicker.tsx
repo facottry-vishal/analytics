@@ -67,7 +67,7 @@ interface DateRangePickerProps
 export function DateRangePicker({
   dateRange,
   dayCount,
-  placeholder = "Pick a date",
+  placeholder = "Select Date Range",
   triggerVariant = "outline",
   triggerSize = "default",
   triggerClassName,
@@ -122,7 +122,7 @@ export function DateRangePicker({
   }, [date?.from, date?.to])
 
   return (
-    <div className="grid gap-2">
+    <div className="gap-2">
       <Popover>
         <PopoverTrigger asChild>
           <Button

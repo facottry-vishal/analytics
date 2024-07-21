@@ -20,7 +20,7 @@
     --accent-foreground: #0d0d0d;
     --destructive: #d93636;
     --destructive-foreground: #fafafa;
-    --border: #e6e6e6;
+    --border: #d4d4d4;
     --input: #e6e6e6;
     --ring: #0d0d0d;
     --radius: 0.5rem;
@@ -48,7 +48,7 @@
     --accent-foreground: #fafafa; /* HSL(0, 0%, 98%) */
     --destructive: #992a1f; /* HSL(0, 62.8%, 30.6%) */
     --destructive-foreground: #fafafa; /* HSL(0, 0%, 98%) */
-    --border: #1e1f21; /* HSL(240, 3.7%, 15.9%) */
+    --border: #3d3e42; /* HSL(240, 3.7%, 15.9%) */
     --input: #1e1f21; /* HSL(240, 3.7%, 15.9%) */
     --ring: #d9e0f2; /* HSL(240, 4.9%, 83.9%) */
     --chart-1: #3399ff; /* HSL(220, 70%, 50%) */
