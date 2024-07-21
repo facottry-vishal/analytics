@@ -16,6 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { activeFilterStore } from "@/lib/store";
 
 type DateRangePickerProps = {
   dateRange?: {
@@ -46,7 +47,8 @@ export function DateRangePicker({
 }: DateRangePickerProps) {
 
   const [date, setDate] = React.useState<DateRange | undefined>(dateRange)
-  
+  const [activeFilter, setActiveFilter] = activeFilterStore(state => [state.activeFilter, state.setActiveFilter]);
+
   React.useEffect(() => {
     if (date?.from && date?.to) {
       setData({
@@ -54,6 +56,20 @@ export function DateRangePicker({
         startDate: format(date.from, "yyyy-MM-dd"),
         endDate: format(date.to, "yyyy-MM-dd"),
       })
+    } else {
+      if (activeFilter.startDate && activeFilter.endDate) {
+        setData({
+          ...data,
+          startDate: activeFilter.startDate,
+          endDate: activeFilter.endDate
+        })
+      } else {
+        setData({
+          ...data,
+          startDate: format(addDays(new Date(), -1), "yyyy-MM-dd"),
+          endDate: format(new Date(), "yyyy-MM-dd")
+        })
+      }
     }
   }, [date])
 

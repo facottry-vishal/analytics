@@ -3,10 +3,9 @@ import type { Metadata } from 'next'
 import { Inter as FontSans } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/ReactToastify.min.css';
 import { ThemeProvider } from "./provider";
 import { Toaster } from "@/components/ui/toaster";
-import { axios_analytics } from "@/lib/axios";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -46,7 +45,7 @@ export default function RootLayout({
           {children}
         </ThemeProvider>
         <ToastContainer
-          position="top-right"
+          position="bottom-right"
           autoClose={2000}
           hideProgressBar={false}
           newestOnTop={true}

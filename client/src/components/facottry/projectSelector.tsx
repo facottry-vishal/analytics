@@ -31,17 +31,21 @@ export function ProjectSelector() {
     }));
 
   const handleProjectChange = (selectedOption: any) => {
-    const project = allProjects.find((item) => item.projectID === selectedOption) || null;
+    try {
+      const project = allProjects.find((item) => item.projectID === selectedOption) || null;
 
-    if (project) {
-      setActiveProject(project);
-      setActiveFilter({});
+      if (project) {
+        setActiveProject(project);
+        setActiveFilter(Object.keys(project.filters).reduce((acc, key) => ({ ...acc, [key]: "" }), {}));
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
   return (
     <Select defaultValue={activeProject?.projectID} onValueChange={handleProjectChange}>
-      <SelectTrigger className="">
+      <SelectTrigger>
         <SelectValue placeholder="Select Project" />
       </SelectTrigger>
       <SelectContent>

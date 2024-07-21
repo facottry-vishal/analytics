@@ -35,64 +35,25 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     setUser: state.setUser
   }));
 
-  const links = [
-    {
-      label: "Dashboard",
-      href: "/dashboard/home",
-      icon: (
-        <IconDashboard className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Log Manager",
-      href: "/dashboard/logs",
-      icon: (
-        <IconArticle className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Settings",
-      href: "/dashboard/settings",
-      icon: (
-        <IconSettings className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Logout",
-      href: "/auth/logout",
-      icon: (
-        <IconLogout2 className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
-      ),
-    },
-  ];
-
-  const fetchData = async () => {
-    try {
-      const userResponse = await axios_analytics.get('/get-user');
-      setUser(userResponse.data);
-
-      const adminResponse = await axios_analytics.get('/get-admin');
-      const { company, projects } = adminResponse.data;
-
-      setProjects(projects);
-      setCompany(company);
-
-      const currentProject = projects.find((p: any) => p.projectID === activeProject?.projectID) || projects[0];
-      setActiveProject(currentProject);
-
-      if (Object.keys(activeFilter).length === 0 && projects.length > 0) {
-        const defaultFilter = Object.keys(projects[0].filters).reduce((acc, key) => ({ ...acc, [key]: "" }), {});
-        setActiveFilter(defaultFilter);
-      }
-
-      setIsLoading(false);
-    } catch (error: any) {
-      console.log(error);
-      router.push(error.response?.data.code === "NO_PROJECT" ? '/' : '/');
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userResponse = await axios_analytics.get('/get-user');
+        setUser(userResponse.data);
+
+        const adminResponse = await axios_analytics.get('/get-admin');
+        const { company, projects } = adminResponse.data;
+
+        setProjects(projects);
+        setCompany(company);
+
+        setIsLoading(false);
+      } catch (error: any) {
+        console.log(error);
+        router.push(error.response?.data.code === "NO_PROJECT" ? '/' : '/');
+      }
+    };
+
     fetchData();
   }, []);
 
@@ -136,11 +97,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 ))}
               </div>
 
-              <Separator className="my-4" />
+              {open && (<Separator className="my-4" />)}
 
               {open && (
                 <div className="w-[97%] mx-auto mt-4 ">
-                  <ProjectSelector />
+                  <div className="flex flex-col gap-2 text-md">
+                    <h1>Project</h1>
+                    <ProjectSelector />
+                  </div>
                 </div>
               )}
             </div>
@@ -155,3 +119,34 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     )
   }
 }
+
+const links = [
+  {
+    label: "Dashboard",
+    href: "/dashboard/home",
+    icon: (
+      <IconDashboard className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
+    ),
+  },
+  {
+    label: "Log Manager",
+    href: "/dashboard/logs",
+    icon: (
+      <IconArticle className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
+    ),
+  },
+  {
+    label: "Settings",
+    href: "/dashboard/settings",
+    icon: (
+      <IconSettings className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
+    ),
+  },
+  {
+    label: "Logout",
+    href: "/auth/logout",
+    icon: (
+      <IconLogout2 className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
+    ),
+  },
+];

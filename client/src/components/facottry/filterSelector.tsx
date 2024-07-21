@@ -1,6 +1,6 @@
 
 'use client'
-import React from 'react'
+import React, { act } from 'react'
 import MultipleSelector from "../ui/select-multi"
 import { activeFilterStore, userStore } from "@/lib/store";
 import {
@@ -12,6 +12,7 @@ import {
 import { Label } from "@/components/ui/label"
 import { DateRangePicker } from "./dateRangePicker";
 import { Button } from "../ui/button";
+import { toast } from "react-toastify";
 
 type Props = {}
 
@@ -28,9 +29,12 @@ const FilterSelector = (props: Props) => {
     const [activeFilter, setActiveFilter] = activeFilterStore(state => [state.activeFilter, state.setActiveFilter]);
     const activeProject = userStore(state => state.activeProject);
     const allFilters = activeProject?.filters || [];
-    const [selectedValue, setSelectedValue] = React.useState<selectedValue>(activeFilter);
+    const [selectedValue, setSelectedValue] = React.useState<selectedValue>({});
 
-    console.log(activeFilter, activeProject);
+    const handleSubmit = () => {
+        setActiveFilter(selectedValue);
+        toast.success("Filter Applied");
+    }
 
     const filterCount = Object.keys(allFilters).length;
     const gridColsClass = filterCount === 1
@@ -48,7 +52,7 @@ const FilterSelector = (props: Props) => {
                     <CardTitle className="text-center md:text-left">Select Filter</CardTitle>
                     <div className="flex gap-2">
                         <DateRangePicker data={selectedValue} setData={setSelectedValue} />
-                        <Button variant={"outline"}>Apply</Button>
+                        <Button variant={"outline"} onClick={handleSubmit}>Apply</Button>
                     </div>
                 </div>
             </CardHeader>
@@ -65,31 +69,27 @@ const FilterSelector = (props: Props) => {
                         label: 'ALL'
                     });
 
-                    const defaultValue = activeFilter[key] ? activeFilter[key].split(',').map((value: string) => ({
-                        value: value,
-                        label: value,
-                    })) : [];
+                    const placeHolder = activeFilter[key] ? activeFilter[key].replace(/,/g, ', ') : "Select...";
 
                     return (
                         <CardContent key={index}>
                             <div className="w-full flex flex-col gap-3">
                                 <Label htmlFor="category">{key}</Label>
                                 <MultipleSelector
-                                    defaultOptions={defaultValue}
                                     options={options}
                                     className="bg-background"
-                                    placeholder="Select..."
+                                    placeholder={placeHolder}
                                     hidePlaceholderWhenSelected={true}
                                     emptyIndicator="No options available"
                                     loadingIndicator="Loading..."
                                     badgeClassName="bg-muted text-primary"
                                     onChange={(selectedOptions) => {
                                         let newSelectedValues = selectedOptions.map((option: any) => option.value);
-                                    
+
                                         if (newSelectedValues.includes("ALL")) {
                                             newSelectedValues = options.filter(option => option.value !== "ALL").map(option => option.value);
                                         }
-                                    
+
                                         setSelectedValue({
                                             ...selectedValue,
                                             [key]: newSelectedValues.join(',')
