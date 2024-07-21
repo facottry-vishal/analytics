@@ -23,20 +23,12 @@ const Cards = () => {
       USA: 120,
       India: 80,
       UK: 50,
-      LK: 1000,
-      USA: 120,
-      India: 80,
-      UK: 50,
-      LK: 1000,
+      LK: 1000
     },
     os: {
       Windows: 300,
       MacOS: 150,
       Linux: 100,
-      USA: 120,
-      India: 80,
-      UK: 50,
-      LK: 1000,
       USA: 120,
       India: 80,
       UK: 50,
@@ -50,19 +42,11 @@ const Cards = () => {
       India: 80,
       UK: 50,
       LK: 1000,
-      USA: 120,
-      India: 80,
-      UK: 50,
-      LK: 1000,
     },
     modelNames: {
       "Model X": 70,
       "Model Y": 60,
       "Model Z": 50,
-      USA: 120,
-      India: 80,
-      UK: 50,
-      LK: 1000,
       USA: 120,
       India: 80,
       UK: 50,
@@ -76,10 +60,6 @@ const Cards = () => {
       India: 80,
       UK: 50,
       LK: 1000,
-      USA: 120,
-      India: 80,
-      UK: 50,
-      LK: 1000,
     },
     states: {
       California: 100,
@@ -89,14 +69,10 @@ const Cards = () => {
       India: 80,
       UK: 50,
       LK: 1000,
-      USA: 120,
-      India: 80,
-      UK: 50,
-      LK: 1000,
     },
   };
 
-  const renderCardContent = (title, items, heading) => (
+  const renderCardContent = (items, heading) => (
     <Card
       className="max-w-sm mb-4 rounded-lg shadow-md"
       style={{ border: "1px solid #3b82f6" }}
@@ -105,10 +81,6 @@ const Cards = () => {
         style={{
           maxHeight: "250px",
           overflowY: "auto",
-          scrollbarWidth: "none" /* Firefox */,
-          "::-webkit-scrollbar": {
-            display: "none",
-          },
         }}
       >
         <Grid container spacing={2}>

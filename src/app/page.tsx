@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link";
 import Image from "next/image";
-import { ModeToggle } from "@/components/ModeToggle";
+import { ModeToggle } from "@/components/ToggleTheme";
 import logo_2 from "@/assets/logo_2.svg";
 import logo_dark_2 from "@/assets/logo_dark_2.svg";
 import { Button } from "@/components/ui/button";

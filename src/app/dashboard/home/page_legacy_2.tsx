@@ -2,7 +2,7 @@
 import React from "react";
 import { userStore } from "@/lib/store";
 import Link from "next/link";
-import Cards from "@/components/Card";
+import Cards from "@/components/Card.jsx";
 import Filter from "@/components/Filter";
 
 const Home = () => {

@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
+import DateRange from "./dashboard/DatePicker";
 
 type Props = {};
 
@@ -64,6 +65,9 @@ const Filter = ({}: Props) => {
             {!isCollapsed && <div>
                 <div className="px-10 py-2 flex flex-col bg-white border-gray-100 w-full border-t text-sm">
                     <div className="flex flex-col gap-4 mt-5">
+                        <div className="w-full text-center">
+                            <DateRange />
+                        </div>
                         {Object.keys(allFilters).map((key, index) => {
                             const options = allFilters[key].values.map((value: any) => ({
                                 value: value,

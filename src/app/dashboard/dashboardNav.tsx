@@ -1,4 +1,4 @@
-import { ModeToggle } from "@/components/ModeToggle"
+import { ModeToggle } from "@/components/ToggleTheme"
 import { Button } from "@/components/ui/button"
 import React from 'react'
 
