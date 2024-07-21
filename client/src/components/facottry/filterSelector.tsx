@@ -57,7 +57,7 @@ const FilterSelector = (props: Props) => {
                 </div>
             </CardHeader>
 
-            <div className={`border-t pt-5 grid ${gridColsClass} z-0`}>
+            {filterCount > 0 ? (<div className={`border-t pt-5 grid ${gridColsClass} z-0`}>
                 {Object.keys(allFilters).map((key, index) => {
                     const options: option[] = allFilters[key].values.map((value: any) => ({
                         value: value,
@@ -101,6 +101,15 @@ const FilterSelector = (props: Props) => {
                     );
                 })}
             </div>
+            ) : (
+            <div>
+                <CardContent>
+                    <div className="border-t pt-5">
+                        <p className="text-center text-md font-medium text-muted-foreground">Select a project to get started...</p>
+                    </div>
+                </CardContent>
+            </div>
+            )}
         </Card>
     )
 }

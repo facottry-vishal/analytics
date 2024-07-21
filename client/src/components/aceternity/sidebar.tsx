@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { IconMenu2, IconX } from "@tabler/icons-react";
+import { IconArrowLeftToArc, IconMenu2, IconX } from "@tabler/icons-react";
 import { ProjectSelector } from "../facottry/projectSelector";
 
 interface Links {
@@ -98,8 +98,8 @@ export const DesktopSidebar = ({
         {children}
       </motion.div>
       {open && (
-        <button className="absolute right-5 bottom-5 z-50 text-zinc-800 dark:text-zinc-200" onClick={() => setOpen(false)}>
-          <IconX />
+        <button className="absolute right-5 bottom-5 z-50 text-zinc-700 dark:text-zinc-300" onClick={() => setOpen(false)}>
+          <IconArrowLeftToArc />
         </button>
       )}
     </div>

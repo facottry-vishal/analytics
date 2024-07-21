@@ -149,18 +149,19 @@ export const getUser = async (req, res) => {
 // GET COUNT OF FILTER VALUES
 export const getCount = async (req, res) => {
   try {
-    const { projectID, filter, startDate, endDate } = req.body;
+    const { projectID, filter } = req.body;
+    const { startDate, endDate, ...mainFilter } = filter;
 
     switch (true) {
       case !projectID:
         return res.status(400).json({ message: "PROJECT ID NOT PROVIDED" });
-      case !filter:
+      case !mainFilter:
         return res.status(400).json({ message: "FILTER NOT PROVIDED" });
     }
 
     let searchFilter = {};
-    for (const key in filter) {
-      searchFilter[key] = filter[key].split(", ");
+    for (const key in mainFilter) {
+      searchFilter[key] = mainFilter[key].split(",");
     }
 
     let filterConditions = Object.entries(searchFilter).reduce(
@@ -198,6 +199,8 @@ export const getCount = async (req, res) => {
 
     const resObj = await logs.aggregate(pipeline).exec();
 
+    console.log(resObj);
+
     const COUNT = {};
     resObj.forEach(({ _id, count }) => {
       for (const key in _id) {
@@ -211,7 +214,7 @@ export const getCount = async (req, res) => {
       }
     });
 
-    return res.status(200).json({ message: "SUCCESS", data: COUNT });
+    return res.status(200).json({ message: "SUCCESS", data: COUNT, filter });
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ message: error.message });

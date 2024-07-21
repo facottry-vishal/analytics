@@ -64,8 +64,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   } else {
     return (
       <main className={cn(
-        "flex flex-col md:flex-row bg-primary-foreground w-full flex-1 mx-auto overflow-hidden text-sm",
-        "h-screen"
+        "flex flex-col md:flex-row bg-primary-foreground w-full flex-1 mx-auto text-sm min-h-screen h-full",
       )}>
         <Sidebar open={open} setOpen={setOpen}>
           <SidebarBody className="justify-between md:relative gap-10 font-semibold">
