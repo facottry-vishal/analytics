@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import Reqres from '../Reqres';
 
-const LogTable = ({ logs }) => {
+interface LogTableProps {
+  logs: any[];
+}
+
+const LogTable: React.FC<LogTableProps> = ({ logs }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [selectedLog, setSelectedLog] = useState(null);
+  const [selectedLog, setSelectedLog] = useState<any | null>(null);
 
   if (!logs || logs.length === 0) {
     return <div className="text-center text-gray-500 mt-4">No logs available</div>;
@@ -13,12 +17,12 @@ const LogTable = ({ logs }) => {
   // Get the headers from the keys of the first log object
   const headers = Object.keys(logs[0]);
 
-  const renderCellContent = (value) => {
+  const renderCellContent = (value: any) => {
     if (typeof value === 'object' && value !== null) {
       if (Array.isArray(value)) {
         return (
           <ul className="list-disc list-inside">
-            {value.map((item, idx) => (
+            {value.map((item: string, idx: number) => (
               <li key={idx} className="truncate">{item.split('/').pop()}</li>
             ))}
           </ul>
@@ -37,16 +41,16 @@ const LogTable = ({ logs }) => {
   const totalPages = Math.ceil(logs.length / rowsPerPage);
   const currentLogs = logs.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
-  const handleRowsPerPageChange = (event) => {
+  const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setCurrentPage(1);
   };
 
-  const handleViewDetails = (log) => {
+  const handleViewDetails = (log: any) => {
     setSelectedLog(log);
   };
 
@@ -87,11 +91,11 @@ const LogTable = ({ logs }) => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {currentLogs.map((log, index) => (
+              {(currentLogs as any[]).map((log: any, index: number) => (
                 <tr key={index}>
                   {headers.map((header) => (
                     <td key={header} className="px-4 py-2 whitespace-nowrap text-sm text-gray-700 max-w-xs overflow-hidden text-ellipsis">
-                      <div className="truncate" title={renderCellContent(log[header])}>
+                      <div className="truncate">
                         {header === '_id' ? log[header].$oid.split('').slice(-4).join('') : renderCellContent(log[header])}
                       </div>
                     </td>

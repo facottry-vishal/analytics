@@ -2,31 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import { userStore } from '@/lib/store';
 import Link from 'next/link';
-import LogFilter from '@/Components/LogFilters';
-import Sidebar from '@/Components/Sidebar';
-import LogTable from '@/Components/dashboard/LogTable';
+import LogFilter from '@/components/LogFilters';
+import Sidebar from '@/components/Sidebar';
+import LogTable from '@/components/dashboard/LogTable';
 import axios from 'axios';
 
 const LogManager = () => {
   const [user] = userStore((state) => [state.user]);
   const [logs, setLogs] = useState([]);
-
-  useEffect(() => {
-    const fetchLogs = async () => {
-      try {
-        const response = await axios.get('/api/logs/get', {
-          headers: {
-            Authorization: `Bearer ${user.token}`
-          }
-        });
-        setLogs(response.data);
-      } catch (error) {
-        console.error('Error fetching logs:', error);
-      }
-    };
-
-    fetchLogs();
-  }, [user]);
 
   return (
     <div className="flex h-screen overflow-hidden">

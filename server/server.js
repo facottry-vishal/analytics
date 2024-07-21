@@ -18,12 +18,14 @@ const corsOptions = {
     process.env.NODE_ENV === "production"
       ? [
           "http://localhost:3000",
+          "http://localhost:3001",
           "http://localhost:8000",
           "http://localhost:5173",
           "https://facottryanalytics.vercel.app"
         ]
       : [
           "http://localhost:3000",
+          "http://localhost:3001",
           "http://localhost:8000",
           "http://localhost:5173",
         ],

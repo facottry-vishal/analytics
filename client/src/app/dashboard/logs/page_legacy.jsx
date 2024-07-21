@@ -22,7 +22,7 @@ import {
   ListItemText,
   Grid,
 } from "@mui/material";
-import Reqres from "@/Components/Reqres";
+import Reqres from "@/components/Reqres";
 
 const LogManager = () => {
   const router = useRouter();

@@ -1,49 +1,26 @@
 "use client";
-import React from "react";
-import { userStore } from "@/lib/store";
-import Link from "next/link";
-import Cards from "@/components/Card";
-import Sidebar from "@/components/Sidebar";
-import Filter from "@/components/Filter";
+import { DateRangePicker } from "@/components/facottry/dateRangePicker";
+import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useState } from "react";
 
-const Home = () => {
-  const [user] = userStore((state) => [state.user]);
+const DashboardHome = () => {
+    const [parent] = useAutoAnimate({
+        duration: 100,
+        easing: 'ease-in-out'
+    })
 
-  return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar />
+    const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>(["react", "angular"]);
 
-      {/* Main Content */}
-      <div className="flex-grow px-7 py-5 bg-gray-100 text-black overflow-auto">
-        <nav className="flex justify-between items-center mt-5">
-          <div>
-            <Link href={'/'} className="font-bold text-2xl">Dashboard</Link>
-          </div>
-          <div className="flex gap-2 items-center">
-            <ul className="flex gap-2">
-              <Link
-                href="/auth/logout"
-                className="font-semibold hover:bg-gray-100 transition-all border rounded-md p-2 text-primary600"
-              >
-                Logout
-              </Link>
-            </ul>
-          </div>
-        </nav>
-        <hr className="my-5" />
-        {/* Filter */}
-        <div className="flex flex-col items-center">
-          <Filter />
-          <div className="py-8 my-5">
-            <Cards />
-          </div>
+    return (
+        <div className="w-full h-full gap-4 flex flex-col">
+            <div className="flex items-center px-5 py-2 bg-primary-foreground justify-end rounded-lg">
+                <DateRangePicker />
+            </div>
+
+            <div className="bg-primary-foreground rounded-lg h-full mb-8">
+            </div>
         </div>
-        <hr className="my-5" />
-        {/* Project Selector */}
-      </div>
-    </div>
-  );
-};
+    );
+}
 
-export default Home;
+export default DashboardHome;

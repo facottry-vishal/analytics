@@ -8,11 +8,16 @@ import Link from "next/link";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { axios_analytics } from "@/lib/axios";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast"
 
 const LoginForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const { toast } = useToast()
 
   useEffect(() => {
     const isAuth = async () => {
@@ -39,53 +44,63 @@ const LoginForm = () => {
       });
       setIsLoading(false);
 
-      router.push("/dashboard");
+      toast({
+        title: "Login Successful!",
+        description: "Welcome to FacOTTry Analytics.",
+      })
+      router.push("/dashboard/home");
     } catch (error: any) {
-      alert(error.response.data.message);
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      })
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center px-6 mx-auto h-screen">
+    <div className="dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2] relative flex flex-col items-center justify-center px-6 mx-auto h-screen">
+
+      <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] z-0" />
+
       {/* Logo */}
-      <Link href="/">
+      <Link className="z-10" href="/">
         <Image
           src={logo_1}
           priority={true}
           alt="logo"
           width={100}
           height={100}
+          className="dark:hidden"
         />
         <Image
           src={logo_1_dark}
           alt="logo"
-          className="hidden"
+          className="hidden dark:block"
           width={100}
           height={100}
           priority={true}
         />
       </Link>
 
-      {/* Login Form */}
-      <div className="w-full bg-white shadow-lg border rounded-lg md:mt-0 sm:max-w-md xl:p-0">
+      <div className="w-full z-10 bg-background shadow-lg border rounded-lg md:mt-0 sm:max-w-md xl:p-0">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+          <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl">
             Login
           </h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
                 htmlFor="email"
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="block mb-2 text-sm font-medium"
               >
                 Email
               </label>
-              <input
+              <Input
                 type="email"
                 name="email"
                 id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
                 placeholder="example@gmail.com"
               />
             </div>
@@ -93,23 +108,22 @@ const LoginForm = () => {
             <div className="relative mb-4">
               <label
                 htmlFor="password"
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="block mb-2 text-sm font-medium"
               >
                 Password
               </label>
-              <input
+              <Input
                 type={isPasswordVisible ? "text" : "password"}
                 name="password"
                 id="password"
                 placeholder="Enter Password"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               />
 
               <div
                 onClick={() => {
                   setIsPasswordVisible((prevState) => !prevState);
                 }}
-                className="cursor-pointer absolute right-3 bottom-2 text-slate-400"
+                className="cursor-pointer absolute right-3 bottom-2"
               >
                 {isPasswordVisible ? (
                   <AiOutlineEyeInvisible fontSize="1.4rem" />
@@ -122,68 +136,50 @@ const LoginForm = () => {
             {/* Remember Me */}
             <div className="flex items-center mb-4">
               <input
-                defaultChecked
                 type="checkbox"
+                defaultChecked
                 id="remember_me"
                 name="remember_me"
-                className="text-primary-600 border-gray-300 focus:ring-primary-600 rounded"
+                className="border accent-black focus:ring-primary cursor-pointer"
               />
               <label
                 htmlFor="remember_me"
-                className="ml-2 block text-sm text-gray-900"
+                className="ml-2 block text-sm cursor-pointer"
               >
                 Remember me
               </label>
             </div>
 
-            <button
+            <Button
               type="submit"
-              className="mb-4 w-full bg-primary bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white"
+              className="w-full mb-3"
             >
               Sign in
-            </button>
+            </Button>
 
-            <Link
-              href={process.env.NEXT_PUBLIC_AUTH_BASE_URL + "/google"}
-              type="button"
-              className="flex items-center justify-center mb-4 w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center border transition-all hover:bg-slate-100"
-            >
-              <Image
-                src={GoogleIcon}
-                alt="google icon"
-                width={20}
-                height={20}
-                className="inline-block mr-2"
-              />
-              <p className="text-black">Continue with Google</p>
-            </Link>
-
-            <p className="mb-2 text-sm text-gray-500">
-              Forgot Password?{" "}
+            <Button variant={"outline"} className="w-full mb-4">
               <Link
-                href="/auth/forgot-password"
-                className="font-semibold text-primary-600 hover:underline"
+                href={process.env.NEXT_PUBLIC_AUTH_BASE_URL + "/google"}
+                type="button"
+                className="flex"
               >
-                Reset
+                <Image
+                  src={GoogleIcon}
+                  alt="google icon"
+                  width={20}
+                  height={20}
+                  className="inline-block mr-2"
+                />
+                <p>Continue with Google</p>
               </Link>
-            </p>
-
-            <p className="text-sm text-gray-500">
-              Don’t have an account yet?{" "}
-              <Link
-                href="/auth/signup"
-                className="font-semibold text-primary-600 hover:underline"
-              >
-                Sign up
-              </Link>
-            </p>
+            </Button>
           </form>
         </div>
       </div>
 
       {/* Loader Icon */}
       {isLoading && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center w-full h-screen bg-black bg-opacity-20">
+        <div className="fixed inset-0 z-50 flex items-center justify-center w-full h-screen bg-black/40">
           <div className="flex items-center justify-center p-8 w-72 h-72">
             <svg
               className="animate-spin h-14 w-14 text-primary-600"
