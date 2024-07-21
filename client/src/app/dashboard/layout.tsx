@@ -17,7 +17,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import logo_2 from "@/assets/logo_2.svg";
 import logo_dark_2 from "@/assets/logo_dark_2.svg";
-import { ProjectSelector } from "@/components/facottry/project-selector";
+import { ProjectSelector } from "@/components/facottry/projectSelector";
 import { Separator } from "@/components/ui/separator";
 import DashboardNav from "./dashboardNav";
 
