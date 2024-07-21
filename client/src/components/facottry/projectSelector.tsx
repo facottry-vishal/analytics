@@ -33,7 +33,6 @@ export function ProjectSelector() {
     }));
 
   const handleProjectChange = (selectedOption: string) => {
-    console.log(selectedOption);
     const project =
       allProjects.find((item) => item.projectID === selectedOption) ||
       null;

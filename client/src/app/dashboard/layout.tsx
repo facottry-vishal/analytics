@@ -108,7 +108,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         "h-screen"
       )}>
         <Sidebar open={open} setOpen={setOpen}>
-          <SidebarBody className="justify-between relative gap-10 font-semibold">
+          <SidebarBody className="justify-between md:relative gap-10 font-semibold">
             <div className="flex flex-col flex-1 overflow-y-auto">
               <Link href='/' className="flex gap-2 items-center">
                 <Image
@@ -145,13 +145,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </div>
               )}
             </div>
-
-
-            {open && (
-              <button className="absolute right-5 bottom-5 z-50 text-zinc-800 dark:text-zinc-200" onClick={() => setOpen(false)}>
-                <IconX />
-              </button>
-            )}
           </SidebarBody>
         </Sidebar>
 

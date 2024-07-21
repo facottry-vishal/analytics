@@ -26,7 +26,7 @@ export default function Home() {
       <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] z-10" />
 
       <Spotlight
-        className="-top-40 left-0 md:left-60 md:-top-20"
+        className="-top-20 left-0 md:left-20 md:-top-20"
         fill="white"
       />
 
