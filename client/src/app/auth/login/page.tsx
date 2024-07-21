@@ -12,25 +12,18 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast"
+import { userStore } from "@/lib/store";
 
 const LoginForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const { toast } = useToast()
+  const { toast } = useToast();
+  const [user] = userStore(state => [state.user]);
 
-  useEffect(() => {
-    const isAuth = async () => {
-      try {
-        await axios_analytics.get("/");
-        router.push("/dashboard/home");
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    isAuth();
-  }, []);
+  if(user){
+    router.push("/dashboard/home");
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

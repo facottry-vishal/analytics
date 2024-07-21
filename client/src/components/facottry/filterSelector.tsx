@@ -15,13 +15,22 @@ import { Button } from "../ui/button";
 
 type Props = {}
 
+type option = {
+    value: string,
+    label: string
+}
+
+type selectedValue = {
+    [key: string]: string
+}
+
 const FilterSelector = (props: Props) => {
     const [activeFilter, setActiveFilter] = activeFilterStore(state => [state.activeFilter, state.setActiveFilter]);
     const activeProject = userStore(state => state.activeProject);
     const allFilters = activeProject?.filters || [];
-    const [selectedValue, setSelectedValue] = React.useState(activeFilter);
-    const [isFilterEditable, setIsFilterEditable] = React.useState(true);
-    const [isCollapsed, setIsCollapsed] = React.useState(false);
+    const [selectedValue, setSelectedValue] = React.useState<selectedValue>(activeFilter);
+
+    console.log(activeFilter, activeProject);
 
     const filterCount = Object.keys(allFilters).length;
     const gridColsClass = filterCount === 1
@@ -38,7 +47,7 @@ const FilterSelector = (props: Props) => {
                 <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
                     <CardTitle className="text-center md:text-left">Select Filter</CardTitle>
                     <div className="flex gap-2">
-                        <DateRangePicker />
+                        <DateRangePicker data={selectedValue} setData={setSelectedValue} />
                         <Button variant={"outline"}>Apply</Button>
                     </div>
                 </div>
@@ -46,10 +55,15 @@ const FilterSelector = (props: Props) => {
 
             <div className={`border-t pt-5 grid ${gridColsClass} z-0`}>
                 {Object.keys(allFilters).map((key, index) => {
-                    const options = allFilters[key].values.map((value: any) => ({
+                    const options: option[] = allFilters[key].values.map((value: any) => ({
                         value: value,
                         label: value,
                     }));
+
+                    options.push({
+                        value: 'ALL',
+                        label: 'ALL'
+                    });
 
                     const defaultValue = activeFilter[key] ? activeFilter[key].split(',').map((value: string) => ({
                         value: value,
@@ -61,14 +75,26 @@ const FilterSelector = (props: Props) => {
                             <div className="w-full flex flex-col gap-3">
                                 <Label htmlFor="category">{key}</Label>
                                 <MultipleSelector
-                                    value={defaultValue}
-                                    defaultOptions={options}
+                                    defaultOptions={defaultValue}
+                                    options={options}
                                     className="bg-background"
                                     placeholder="Select..."
                                     hidePlaceholderWhenSelected={true}
                                     emptyIndicator="No options available"
                                     loadingIndicator="Loading..."
                                     badgeClassName="bg-muted text-primary"
+                                    onChange={(selectedOptions) => {
+                                        let newSelectedValues = selectedOptions.map((option: any) => option.value);
+                                    
+                                        if (newSelectedValues.includes("ALL")) {
+                                            newSelectedValues = options.filter(option => option.value !== "ALL").map(option => option.value);
+                                        }
+                                    
+                                        setSelectedValue({
+                                            ...selectedValue,
+                                            [key]: newSelectedValues.join(',')
+                                        });
+                                    }}
                                 />
                             </div>
                         </CardContent>

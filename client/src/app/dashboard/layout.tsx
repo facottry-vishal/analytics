@@ -77,7 +77,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       setProjects(projects);
       setCompany(company);
 
-      const currentProject = projects.find((p: Project) => p.projectID === activeProject?.projectID) || projects[0];
+      const currentProject = projects.find((p: any) => p.projectID === activeProject?.projectID) || projects[0];
       setActiveProject(currentProject);
 
       if (Object.keys(activeFilter).length === 0 && projects.length > 0) {
@@ -147,7 +147,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </SidebarBody>
         </Sidebar>
 
-        <div className="w-full flex flex-col gap-4 pt-5 px-10">
+        <div className="w-full flex flex-col gap-4 pt-5 px-10 ">
           <DashboardNav />
           {children}
         </div>

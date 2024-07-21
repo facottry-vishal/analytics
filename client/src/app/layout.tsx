@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider } from "./provider";
 import { Toaster } from "@/components/ui/toaster";
+import { axios_analytics } from "@/lib/axios";
 
 const fontSans = FontSans({
   subsets: ["latin"],

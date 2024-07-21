@@ -8,22 +8,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { userStore } from "@/lib/store";
-
-
+import { activeFilterStore, userStore } from "@/lib/store";
 
 export function ProjectSelector() {
   const {
     projects: allProjects,
     activeProject,
     setActiveProject,
-    company,
   } = userStore((state) => ({
     projects: state.projects,
     activeProject: state.activeProject,
     setActiveProject: state.setActiveProject,
-    company: state.company,
   }));
+
+  const [setActiveFilter] = activeFilterStore(state => [state.setActiveFilter]);
 
   const ProjectOptions = allProjects
     .sort((a, b) => a.name.localeCompare(b.name))
@@ -32,15 +30,17 @@ export function ProjectSelector() {
       label: `${item.name} - ${item.type}`,
     }));
 
-  const handleProjectChange = (selectedOption: string) => {
-    const project =
-      allProjects.find((item) => item.projectID === selectedOption) ||
-      null;
-    if (project) setActiveProject(project);
-  };
+  const handleProjectChange = (selectedOption: any) => {
+    const project = allProjects.find((item) => item.projectID === selectedOption) || null;
+
+    if (project) {
+      setActiveProject(project);
+      setActiveFilter({});
+    }
+  }
 
   return (
-    <Select onValueChange={handleProjectChange}>
+    <Select defaultValue={activeProject?.projectID} onValueChange={handleProjectChange}>
       <SelectTrigger className="">
         <SelectValue placeholder="Select Project" />
       </SelectTrigger>

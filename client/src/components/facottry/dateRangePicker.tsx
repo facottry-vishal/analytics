@@ -17,55 +17,25 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-interface DateRangePickerProps
-  extends React.ComponentPropsWithoutRef<typeof PopoverContent> {
-  /**
-   * The selected date range.
-   * @default undefined
-   * @type DateRange
-   * @example { from: new Date(), to: new Date() }
-   */
-  dateRange?: DateRange
-
-  /**
-   * The number of days to display in the date range picker.
-   * @default undefined
-   * @type number
-   * @example 7
-   */
-  dayCount?: number
-
-  /**
-   * The placeholder text of the calendar trigger button.
-   * @default "Pick a date"
-   * @type string | undefined
-   */
-  placeholder?: string
-
-  /**
-   * The variant of the calendar trigger button.
-   * @default "outline"
-   * @type "default" | "outline" | "secondary" | "ghost"
-   */
-  triggerVariant?: Exclude<ButtonProps["variant"], "destructive" | "link">
-
-  /**
-   * The size of the calendar trigger button.
-   * @default "default"
-   * @type "default" | "sm" | "lg"
-   */
-  triggerSize?: Exclude<ButtonProps["size"], "icon">
-
-  /**
-   * The class name of the calendar trigger button.
-   * @default undefined
-   * @type string
-   */
+type DateRangePickerProps = {
+  dateRange?: {
+    from: Date,
+    to: Date
+  },
+  dayCount?: number,
+  placeholder?: string,
+  triggerVariant?: Exclude<ButtonProps["variant"], "destructive" | "link">,
+  triggerSize?: Exclude<ButtonProps["size"], "icon">,
   triggerClassName?: string
+  className?: string
+  data: object,
+  setData: Function
 }
 
 export function DateRangePicker({
   dateRange,
+  data,
+  setData,
   dayCount,
   placeholder = "Select Date Range",
   triggerVariant = "outline",
@@ -74,52 +44,18 @@ export function DateRangePicker({
   className,
   ...props
 }: DateRangePickerProps) {
-  const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
 
-  const [date, setDate] = React.useState<DateRange | undefined>(() => {
-    const fromParam = searchParams.get("from")
-    const toParam = searchParams.get("to")
-
-    let fromDay: Date | undefined
-    let toDay: Date | undefined
-
-    if (dateRange) {
-      fromDay = dateRange.from
-      toDay = dateRange.to
-    } else if (dayCount) {
-      toDay = new Date()
-      fromDay = addDays(toDay, -dayCount)
-    }
-
-    return {
-      from: fromParam ? new Date(fromParam) : fromDay,
-      to: toParam ? new Date(toParam) : toDay,
-    }
-  })
-
-  // Update query string
+  const [date, setDate] = React.useState<DateRange | undefined>(dateRange)
+  
   React.useEffect(() => {
-    const newSearchParams = new URLSearchParams(searchParams)
-    if (date?.from) {
-      newSearchParams.set("from", format(date.from, "yyyy-MM-dd"))
-    } else {
-      newSearchParams.delete("from")
+    if (date?.from && date?.to) {
+      setData({
+        ...data,
+        startDate: format(date.from, "yyyy-MM-dd"),
+        endDate: format(date.to, "yyyy-MM-dd"),
+      })
     }
-
-    if (date?.to) {
-      newSearchParams.set("to", format(date.to, "yyyy-MM-dd"))
-    } else {
-      newSearchParams.delete("to")
-    }
-
-    router.replace(`${pathname}?${newSearchParams.toString()}`, {
-      scroll: false,
-    })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [date?.from, date?.to])
+  }, [date])
 
   return (
     <div className="gap-2">

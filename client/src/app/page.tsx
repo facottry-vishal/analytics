@@ -6,16 +6,30 @@ import logo_2 from "@/assets/logo_2.svg";
 import logo_dark_2 from "@/assets/logo_dark_2.svg";
 import { Button } from "@/components/ui/button";
 import { userStore } from "@/lib/store";
-import React from "react";
+import React, { useEffect } from "react";
 import { FlipWords } from "@/components/aceternity/flip-words";
 import { Spotlight } from "@/components/aceternity/spotlight";
 import { HoverBorderGradient } from "@/components/aceternity/hover-border-gradient";
 import heroImageDark from "@/assets/hero-dark@90.dba36cdf.jpg";
 import heroImageLight from "@/assets/hero@75.b2469a49.jpg";
+import { axios_analytics } from "@/lib/axios";
 
 export default function Home() {
-  const [user] = userStore((state) => [state.user]);
+  const [user, setUser] = userStore((state) => [state.user, state.setUser]);
   const words = ["Analyze", "Monitor", "Optimize", "Scale"];
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userResponse = await axios_analytics.get('/get-user');
+        setUser(userResponse.data);
+      } catch (error) {
+        setUser(null);
+      }
+    }
+
+    fetchUser();
+  }, []);
 
   return (
     <div className="relative dark:bg-grid-white/[0.2] bg-grid-black/[0.2] textsm">
