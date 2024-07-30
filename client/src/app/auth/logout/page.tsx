@@ -53,7 +53,9 @@ const Logout = () => {
     }, [])
 
     return (
-        <Loader />
+        <div className="bg-background w-screen h-screen">
+            <Loader />
+        </div>
     )
 }
 

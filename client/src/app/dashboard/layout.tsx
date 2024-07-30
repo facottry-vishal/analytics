@@ -59,7 +59,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   if (isLoading) {
     return (
-      <Loader />
+      <div className="bg-background w-screen h-screen">
+        <Loader />
+      </div>
     )
   } else {
     return (
