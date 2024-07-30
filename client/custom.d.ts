@@ -66,3 +66,10 @@ type Project = {
 };
 
 type Filter = any;
+
+type logData = [
+  {
+    "_id": any,
+    pathnames: [string],
+  }
+] | null;

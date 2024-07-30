@@ -38,12 +38,12 @@ export default function CountCard({ data }: CountCardProps) {
                     <CardTitle>{data?.title}</CardTitle>
                     <CardDescription >API hits based on <span className="lowercase">{data?.title}</span></CardDescription>
                 </div>
-                <Button asChild size="sm" className="ml-auto gap-1">
+                {/* <Button asChild size="sm" className="ml-auto gap-1">
                     <Link href="#">
                         View Details
                         <ArrowUpRight className="h-4 w-4" />
                     </Link>
-                </Button>
+                </Button> */}
             </CardHeader>
             <CardContent>
                 <Table>

@@ -164,6 +164,8 @@ export const getCount = async (req, res) => {
       searchFilter[key] = mainFilter[key].split(",");
     }
 
+    console.log(searchFilter)
+
     let filterConditions = Object.entries(searchFilter).reduce(
       (acc, [key, value]) => {
         if (Array.isArray(value)) {
@@ -199,8 +201,6 @@ export const getCount = async (req, res) => {
 
     const resObj = await logs.aggregate(pipeline).exec();
 
-    console.log(resObj);
-
     const COUNT = {};
     resObj.forEach(({ _id, count }) => {
       for (const key in _id) {
@@ -224,18 +224,20 @@ export const getCount = async (req, res) => {
 // GET LIST OF PATHNAMES
 export const getLogs = async (req, res) => {
   try {
-    const { projectID, filter, startDate, endDate } = req.body;
+    const { projectID, filter } = req.body;
+    
+    const { startDate, endDate, ...mainFilter } = filter;
 
     switch (true) {
       case !projectID:
         return res.status(400).json({ message: "PROJECT ID NOT PROVIDED" });
-      case !filter:
+      case !mainFilter:
         return res.status(400).json({ message: "FILTER NOT PROVIDED" });
     }
 
     let searchFilter = {};
-    for (const key in filter) {
-      searchFilter[key] = filter[key].split(", ");
+    for (const key in mainFilter) {
+      searchFilter[key] = mainFilter[key].split(",");
     }
 
     let filterConditions = Object.entries(searchFilter).reduce(
@@ -272,6 +274,8 @@ export const getLogs = async (req, res) => {
     ];
 
     const resObj = await logs.aggregate(pipeline).exec();
+
+    console.log(resObj);
 
     // Flatten the pathnames array
     resObj.forEach((obj) => {

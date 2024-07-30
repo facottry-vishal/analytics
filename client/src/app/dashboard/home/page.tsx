@@ -33,7 +33,7 @@ const DashboardHome = () => {
                     filter: activeFilter
                 });
 
-                if(response.data.data) {
+                if (response.data.data) {
                     setCountData(response.data.data);
                 }
             } catch (error) {
@@ -61,7 +61,11 @@ const DashboardHome = () => {
                         )
                     }
                     )}
-                </div>) : null}
+                </div>) : (
+                <div className="w-full text-muted-foreground flex h-full justify-center">
+                    <p>Nothing to show...</p>
+                </div>
+            )}
         </div>
     );
 }
