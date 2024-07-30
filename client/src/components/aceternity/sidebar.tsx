@@ -4,7 +4,11 @@ import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { IconArrowLeftToArc, IconMenu2, IconX } from "@tabler/icons-react";
-import { ProjectSelector } from "../facottry/projectSelector";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
 
 interface Links {
   label: string;
@@ -171,19 +175,26 @@ export const SidebarLink = ({
       <Link
         href={link.href}
         className={cn(
-          "flex items-center justify-start gap-2  group/sidebar py-2",
+          "flex items-center justify-start gap-2 group/sidebar py-2",
           className
         )}
         {...props}
       >
-        {link.icon}
+        <HoverCard>
+          <HoverCardTrigger>
+            {link.icon}
+          </HoverCardTrigger>
+          <HoverCardContent side="right">
+            {link.label}
+          </HoverCardContent>
+        </HoverCard>
 
         <motion.span
           animate={{
             display: open ? "inline-block" : "none",
             opacity: open ? 1 : 0,
           }}
-          className="text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+          className="text-zinc-700 dark:text-zinc-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
         >
           {link.label}
         </motion.span>

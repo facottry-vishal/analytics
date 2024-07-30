@@ -42,14 +42,18 @@ const LogsPage = () => {
       </div>
 
       {logData ? (
-                <div ref={parent} className="grid grid-cols-1 gap-6 mb-10">
-                    {logData && logData.map((log, index) => {
-                        return (
-                          <LogTable key={index} log={log} />
-                        )
-                    }
-                    )}
-                </div>) : null}
+        <div ref={parent} className="grid grid-cols-1 gap-6 mb-10">
+          {logData && logData.map((log, index) => {
+            return (
+              <LogTable key={index} log={log} />
+            )
+          }
+          )}
+        </div>) : (
+        <div className="w-full text-muted-foreground flex h-full justify-center">
+          <p>Nothing to show...</p>
+        </div>
+      )}
     </div>
   );
 };

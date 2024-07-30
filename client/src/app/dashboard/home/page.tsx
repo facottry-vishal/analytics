@@ -61,7 +61,11 @@ const DashboardHome = () => {
                         )
                     }
                     )}
-                </div>) : null}
+                </div>) : (
+                <div className="w-full text-muted-foreground flex h-full justify-center">
+                    <p>Nothing to show...</p>
+                </div>
+            )}
         </div>
     );
 }
