@@ -11,13 +11,18 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { usePathname } from "next/navigation"
+import Link from "next/link"
+
+const truncateSegment = (segment: string, maxLength: number = 11) => {
+    return segment.length > maxLength ? `${segment.substring(0, maxLength)}...` : segment;
+};
 
 const DashboardNav = () => {
     const path = usePathname();
     const pathSegments = path.split("/").filter(Boolean);
 
     return (
-        <nav className="flex justify-between items-center">
+        <nav className="justify-between items-center hidden md:flex">
             <Breadcrumb className="font-semibold">
                 <BreadcrumbList>
                     <BreadcrumbItem>
@@ -30,9 +35,9 @@ const DashboardNav = () => {
                                 <BreadcrumbSeparator />
                                 <BreadcrumbItem className="capitalize">
                                     {index === pathSegments.length - 1 ? (
-                                        <span>{segment}</span>
+                                        <span>{truncateSegment(segment)}</span>
                                     ) : (
-                                        <BreadcrumbLink href={href}>{segment}</BreadcrumbLink>
+                                        <Link href={href}>{truncateSegment(segment)}</Link>
                                     )}
                                 </BreadcrumbItem>
                             </React.Fragment>

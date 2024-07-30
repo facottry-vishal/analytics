@@ -170,35 +170,47 @@ export const SidebarLink = ({
   props?: LinkProps;
 }) => {
   const { open } = useSidebar();
-  return (
-    <div>
-      <Link
-        href={link.href}
-        className={cn(
+
+  if (!open) {
+    return (
+      <HoverCard>
+        <HoverCardTrigger className={cn(
           "flex items-center justify-start gap-2 group/sidebar py-2",
           className
-        )}
-        {...props}
-      >
-        <HoverCard>
-          <HoverCardTrigger>
-            {link.icon}
-          </HoverCardTrigger>
-          <HoverCardContent side="right">
+        )}>
+          {link.icon}
+        </HoverCardTrigger>
+        <HoverCardContent>
+          <span className="text-zinc-700 dark:text-zinc-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0">
             {link.label}
-          </HoverCardContent>
-        </HoverCard>
-
-        <motion.span
-          animate={{
-            display: open ? "inline-block" : "none",
-            opacity: open ? 1 : 0,
-          }}
-          className="text-zinc-700 dark:text-zinc-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+          </span>
+        </HoverCardContent>
+      </HoverCard>
+    );
+  } else {
+    return (
+      <div>
+        <Link
+          href={link.href}
+          className={cn(
+            "flex items-center justify-start gap-2 group/sidebar py-2",
+            className
+          )}
+          {...props}
         >
-          {link.label}
-        </motion.span>
-      </Link>
-    </div>
-  );
+          {link.icon}
+
+          <motion.span
+            animate={{
+              display: open ? "inline-block" : "none",
+              opacity: open ? 1 : 0,
+            }}
+            className="text-zinc-700 dark:text-zinc-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+          >
+            {link.label}
+          </motion.span>
+        </Link>
+      </div>
+    );
+  }
 };

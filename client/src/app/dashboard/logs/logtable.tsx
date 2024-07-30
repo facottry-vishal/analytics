@@ -1,5 +1,6 @@
 "use client"
 
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -15,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import Link from "next/link";
 
 export default function LogTable({ log }: {
   log: any
@@ -28,11 +30,11 @@ export default function LogTable({ log }: {
       <CardHeader className="px-7">
         <CardTitle>Logs</CardTitle>
         <CardDescription className="flex gap-2">
-            {Object.keys(filter).map((key, index) => (
-              <div key={index} className="text-sm mt-1 text-muted-foreground">
-                {key}: {filter[key]}
-              </div>
-            ))}
+          {Object.keys(filter).map((key, index) => (
+            <div key={index} className="text-sm mt-1 text-muted-foreground">
+              {key}: {filter[key]}
+            </div>
+          ))}
         </CardDescription>
       </CardHeader>
       <CardContent className="h-[30vh] overflow-y-scroll scrollbar-hide">
@@ -44,17 +46,24 @@ export default function LogTable({ log }: {
             </TableRow>
           </TableHeader>
           <TableBody className="">
-            {pathnames.map((pathname: any, index: number) => (
-              <TableRow key={index}>
-                <TableCell>
-                  <div className="font-medium">{pathname.pathname}</div>
-                  <div className="text-sm text-muted-foreground">
-                    {pathname}
-                  </div>
-                </TableCell>
-                <TableCell className="text-right text-muted-foreground">View</TableCell>
-              </TableRow>
-            ))}
+            {pathnames.map((pathname: any, index: number) => {
+              const encodedPathname = encodeURIComponent(pathname)
+
+              return (
+                <TableRow key={index}>
+                  <TableCell>
+                    <div className="text-sm text-muted-foreground">
+                      {pathname}
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-right text-muted-foreground">
+                    <Link href={`/dashboard/logs/${encodedPathname}`}>
+                      <Button variant={'outline'}>View</Button>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </CardContent>
