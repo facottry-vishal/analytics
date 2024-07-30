@@ -33,7 +33,7 @@ const DashboardHome = () => {
                     filter: activeFilter
                 });
 
-                if(response.data.data) {
+                if (response.data.data) {
                     setCountData(response.data.data);
                 }
             } catch (error) {

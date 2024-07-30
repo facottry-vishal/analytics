@@ -37,15 +37,19 @@ const LogsPage = () => {
 
   return (
     <div className="w-full h-full gap-4 flex flex-col">
-      <div ref={parent} className="rounded-lg w-full flex justify-center">
+      <div ref={parent} className="rounded-lg w-full flex justify-center mb-5">
         <FilterSelector />
       </div>
 
-      <div className="my-5 flex flex-col gap-6">
-        {logData && logData.map((log, index) => (
-          <LogTable key={index} log={log} />
-        ))}
-      </div>
+      {logData ? (
+                <div ref={parent} className="grid grid-cols-1 gap-6 mb-10">
+                    {logData && logData.map((log, index) => {
+                        return (
+                          <LogTable key={index} log={log} />
+                        )
+                    }
+                    )}
+                </div>) : null}
     </div>
   );
 };

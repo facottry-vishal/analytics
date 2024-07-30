@@ -21,7 +21,7 @@ export default function LogTable({ log }: {
 }) {
 
   const filter = log._id;
-  const pathnames = log.pathnames;
+  const pathnames = log.pathnames
 
   return (
     <Card className="">
@@ -48,7 +48,7 @@ export default function LogTable({ log }: {
               <TableRow key={index}>
                 <TableCell>
                   <div className="font-medium">{pathname.pathname}</div>
-                  <div className="hidden text-sm text-muted-foreground md:inline">
+                  <div className="text-sm text-muted-foreground">
                     {pathname}
                   </div>
                 </TableCell>
