@@ -48,7 +48,7 @@ const DashboardNav = () => {
 
             <div className="flex items-center gap-2 md:gap-4">
                 <ModeToggle />
-                <Button variant={"outline"}>Profile</Button>
+                {/* <Button variant={"outline"}>Profile</Button> */}
             </div>
         </nav>
     )

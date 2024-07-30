@@ -137,13 +137,6 @@ const links = [
     ),
   },
   {
-    label: "Settings",
-    href: "/dashboard/settings",
-    icon: (
-      <IconSettings className="text-zinc-700 dark:text-zinc-200 h-7 w-7 flex-shrink-0" />
-    ),
-  },
-  {
     label: "Logout",
     href: "/auth/logout",
     icon: (
