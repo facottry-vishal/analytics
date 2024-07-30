@@ -37,17 +37,15 @@ const LogsPage = () => {
 
   return (
     <div className="w-full h-full gap-4 flex flex-col">
-      <div ref={parent} className="rounded-lg w-full flex justify-center mb-8">
+      <div ref={parent} className="rounded-lg w-full flex justify-center">
         <FilterSelector />
       </div>
 
-      {logData ? (
-        <div ref={parent} className="grid">
-          <LogTable logData={logData} />
-        </div>
-      ) : (
-        <p>No logs available</p> // Add this line to indicate no logs
-      )}
+      <div className="my-5 flex flex-col gap-6">
+        {logData && logData.map((log, index) => (
+          <LogTable key={index} log={log} />
+        ))}
+      </div>
     </div>
   );
 };

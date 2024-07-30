@@ -98,7 +98,7 @@ export const DesktopSidebar = ({
         {children}
       </motion.div>
       {open && (
-        <button className="absolute left-60 bottom-5 z-50 text-zinc-700 dark:text-zinc-300" onClick={() => setOpen(false)}>
+        <button className="fixed left-60 bottom-5 z-50 text-zinc-700 dark:text-zinc-300" onClick={() => setOpen(false)}>
           <IconArrowLeftToArc />
         </button>
       )}
