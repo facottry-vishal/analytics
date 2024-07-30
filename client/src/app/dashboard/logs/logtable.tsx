@@ -10,27 +10,35 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const LogTable = ({ logs }) => {
-  console.log('LogTable logs:', logs); // Add this line to check the logs received
+type Props = {
+  logData: logData;
+}
+
+const LogTable = ({ logData }: Props) => {
+  console.log(logData);
 
   return (
     <Table>
-      <TableCaption>A list of your recent logs.</TableCaption>
       <TableHeader>
-        <TableRow>
+        <TableRow className="">
+          <TableHead className="w-[100px]">Filters</TableHead>
           <TableHead className="w-[100px]">Pathname</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {logs.map((log) => (
-          <TableRow key={log._id}>
-            <TableCell className="font-medium">{log._id}</TableCell>
-            <TableCell>{log.status}</TableCell>
-            <TableCell>{log.method}</TableCell>
-            <TableCell className="text-right">{log.amount}</TableCell>
+        {logData?.map((log, index) => (
+          <TableRow key={index}>
+            <TableCell>
+              {Object.keys(log._id).map((key, index) => (
+                <div>{key} : {log._id[key]}</div>
+              ))}
+            </TableCell>
+
+            <TableCell>
+              {log.pathnames.map((pathname, index) => (
+                <div>{pathname}</div>
+              ))}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
