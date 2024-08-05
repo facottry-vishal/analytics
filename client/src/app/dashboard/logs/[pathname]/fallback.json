@@ -1,0 +1,28 @@
+{
+    "timestamp": "2024-07-30T16:40:29.946Z",
+    "request": {
+        "body": {
+            "projectID": "apneck_demo_e1480263-35d7-4fa1-95f3-0d5952bf2d7b",
+            "filter": {
+                "COUNTRY": "US",
+                "SUBSCRIPTION": "FREE"
+            }
+        },
+        "headers": {
+            "x-client-hash": "24249d56773a8891a367006b844973070196d66e08810533fb7f30f97a0430d2",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+        },
+        "method": "POST",
+        "url": "/get-mapping"
+    },
+    "response": {
+        "code": "NO_MAPPING",
+        "message": "No Mapping Found",
+        "mappings": {
+            "appConfig": {},
+            "playerConfig": {},
+            "customConfig": {},
+            "filter": {}
+        }
+    }
+}

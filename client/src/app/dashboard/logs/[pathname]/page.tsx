@@ -11,6 +11,7 @@ import {
 import { Activity } from "lucide-react"
 import { JsonEditor } from 'json-edit-react'
 import { useTheme } from "next-themes";
+import fallback from './fallback.json';
 
 type Log = {
   request: any,
@@ -19,21 +20,19 @@ type Log = {
 } | null;
 
 export default function Component({ params }: { params: { pathname: string } }) {
-  const [log, setLog] = useState<Log>(null);
+  const [log, setLog] = useState<Log>(fallback);
   const { theme, setTheme } = useTheme();
-
-  console.log(theme)
 
   const decodedPathname = decodeURIComponent(params.pathname);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await axios_analytics.get(`/get-log-by-id?pathname=${decodedPathname}`);
-      setLog(data);
-    }
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const { data } = await axios_analytics.get(`/get-log-by-id?pathname=${decodedPathname}`);
+  //     setLog(data);
+  //   }
 
-    fetchData();
-  }, [])
+  //   fetchData();
+  // }, [])
 
   if (!log) return (
     <Loader />
